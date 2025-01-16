@@ -13,12 +13,12 @@
 
     <v-row justify="center">
       <v-col cols="12" class="text-center">
-        <h1>Contact Us</h1>
+        <h1>Kontaktirajte nas</h1>
         <p>
-          We’d love to hear your feedback! If you have any questions, requests,
-          or need additional information, please fill out the form below.
-          Our team will get back to you as soon as possible.
-          Your data will only be used to contact you and will not be used for any other purposes.
+          Voljeli bismo čuti vaše mišljenje! Ako imate bilo kakva pitanja, prijedloge ili trebate dodatne informacije,
+          ispunite obrazac ispod.
+          Naš tim će vam se javiti u najkraćem mogućem roku.
+          Vaši podaci koristit će se isključivo za komunikaciju s vama i neće biti korišteni u druge svrhe.
         </p>
       </v-col>
     </v-row>
@@ -36,7 +36,7 @@
           </v-col>
           <v-col cols="10">
             <div class="contact-info">
-              <div class="contact-info-title">Address</div>
+              <div class="contact-info-title">Adresa</div>
               <div>Matice hrvatske, Mostar 88000,</div>
               <div>FPMOZ</div>
             </div>
@@ -53,7 +53,7 @@
           </v-col>
           <v-col cols="10">
             <div class="contact-info">
-              <div class="contact-info-title">Phone</div>
+              <div class="contact-info-title">Broj telefona</div>
               <div>12523-4566-8954-8956</div>
             </div>
           </v-col>
@@ -70,7 +70,7 @@
           <v-col cols="10">
             <div class="contact-info">
               <div class="contact-info-title">Email</div>
-              <div>informatickiprojekt@gmail.com</div>
+              <div>pzi@gmail.com</div>
             </div>
           </v-col>
         </v-row>
@@ -79,11 +79,11 @@
       <v-col cols="12" md="6">
         <v-form ref="form">
           <v-card class="form-container">
-            <v-card-title>Send Message</v-card-title>
+            <v-card-title>Pošalji poruku</v-card-title>
             <v-card-text>
               <v-text-field
                 v-model="form.name"
-                label="Full Name"
+                label="Name"
                 :rules="[v => !!v || 'Name is required']"
                 required
               ></v-text-field>
@@ -112,7 +112,7 @@
       </v-col>
     </v-row>
   </v-container><br><br>
-  <Faq/>
+
 
 </template>
 
@@ -177,7 +177,7 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  color: white;
+  color: white !important;
 
   .text-center {
     text-align: center;

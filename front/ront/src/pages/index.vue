@@ -1,68 +1,127 @@
 <template>
-  <!--Prva slika s tekstom --->
-  <v-container fluid class="hero-container">
+  <v-container class="hero-container" fluid>
+    <video class="hero-video" autoplay muted loop>
+      <source src="@/assets/3141208-uhd_3840_2160_25fps.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay-content">
+      <h1 class="hero-title">
+        VAŠA VIZIJA, NAŠ PRIORITET - DOBRO DOŠLI NA SummitVision!</h1>
+      <p class="hero-description">
+        Studentska platforma za inovativne startup projekte.
+        Otkrij svoj potencijal, poveži se sa studentima i stvaraj budućnost!
+      </p>
+      <router-link to="/about">
+        <v-btn class="hero-btn" large elevation="2">Pročitaj više</v-btn>
+      </router-link>
+    </div>
+  </v-container>
+<!--Slika-->
+
+  <v-container fluid class="py-10" style="background-color: #000; color: #fff;">
     <v-row align="center" justify="center">
-      <v-col cols="12" class="text-center">
-        <h1 class="hero-title">Welcome to SkillHubProjects</h1>
-        <p class="hero-description">
-          SkillHubProjects is your go-to destination for collaborating on freelance projects.<br>
-          Whether you're an experienced professional or just starting your career, this platform allows you to find projects,
-          connect with talented individuals, and build something incredible together.<br>
-          Join our community, expand your skills, and bring your ideas to life on SkillHubProjects.
+      <!-- Tekstualni dio -->
+      <v-col cols="12" md="6" class="text-left">
+        <h1 class="display-2" style="color: #00f7ff;">Započni Svoju Karijeru Uz SummitVision!</h1>
+        <h2 class="display-2" style="color: #00f7ff;">Ostvari svoje snove kroz rad na startup projektima i razvoj svojih programerskih vještina!</h2><br>
+        <p class="body-1">
+          SummitVision je inovativna platforma za studente koja nudi priliku za rad na startup projektima,
+          razvoj programerskih vještina i stjecanje praktičnog iskustva. Prijavi se na projekte, surađuj s
+          kolegama studentima, konzultiraj se s iskusnim mentorima i upoznaj se s najnovijim tehnologijama.
+          SummitVision je tvoj korak prema profesionalnom razvoju i uspješnoj karijeri!
         </p>
-        <router-link to="/about">
-          <v-btn class="hero-btn" large elevation="2">More Information</v-btn>
-        </router-link>
+      </v-col>
+
+      <!-- Dio sa slikom -->
+      <v-col cols="12" md="6" class="text-center">
+        <img
+          src="https://correctdigital.com/wp-content/uploads/2023/08/onlineImages-1-1024x683-1200x650.jpg"
+          alt="slika projekta"
+          style="max-width: 100%; border-radius: 10px;"
+        />
       </v-col>
     </v-row>
   </v-container>
 
+  <!--Tehnologije-->
+  <v-card class="pa-4" outlined>
+    <v-card-title>
+      <div>
+        <h3>Tehnologije</h3>
+        <p  class="subtitle-1" style="font-size: clamp(1rem, 1.5vw, 1.2rem);">Otkrijte moćne alate koji će transformirati
+          vaše projekte u uspješne inovacije</p>
+      </div>
+    </v-card-title>
 
-  <br> <br> <br> <br> <br>
-  <v-container class="hero-section py-5" fluid>
-    <v-row align="center" justify="center" class="text-center">
-      <v-col cols="12" md="8">
-        <h1 class="hero-title display-2">Ready to Kickstart Your Project Journey?</h1>
-        <p class="hero-subtitle">Join us and unlock exciting opportunities to work on innovative projects that make a difference.</p>
-        <router-link to="/contact">
-          <v-btn  class="hero-button">Let's Talk</v-btn>
-        </router-link>
-        <router-link to="/projects">
-          <v-btn  class="hero-button outlined">Explore Available Projects</v-btn>
-        </router-link>
-      </v-col>
-    </v-row>
-  </v-container>
+    <v-card-text>
+      <div class="technologies-container">
+
+        <div class="technology-items">
+          <div v-for="(technology, index) in technologies" :key="index" class="technology-item">
+            <v-icon large class="mr-2" :color="technology.iconColor">{{ technology.icon }}</v-icon>
+            <span class="headline">{{ technology.name }}</span>
+          </div>
+
+          <div v-for="(technology, index) in technologies" :key="'duplicate-' + index" class="technology-item">
+            <v-icon large class="mr-2" :color="technology.iconColor">{{ technology.icon }}</v-icon>
+            <span class="headline">{{ technology.name }}</span>
+          </div>
+        </div>
+      </div>
+    </v-card-text>
+  </v-card>
 
     <!--Recenzije-->
-    <br> <br> <br> <br> <br>
-  <v-carousel
-    height="400"
-    show-arrows="hover"
-    cycle
-    hide-delimiter-background
-  >
-    <v-carousel-item
-      v-for="(testimonial, index) in testimonials"
-      :key="index"
-      >
-      <v-sheet
-        class="testimonial-sheet"
-        height="100%"
-        elevation="2"
-      >
-        <div class="d-flex fill-height justify-center align-center">
-          <div class="text-center">
-            <v-icon large color="white">mdi-format-quote-close</v-icon>
-            <p class="testimonial-text">{{ testimonial.text }}</p>
-            <p class="testimonial-author">{{ testimonial.author }}</p>
+    <br> <br>
+  <v-container class="testimonials-section" fluid>
+    <v-row>
+      <v-col cols="12" md="6">
+        <div class="testimonials-header">
+          <p class="subtitle">SVJEDOČANSTVO</p>
+          <h1 class="main-title">ŠTO NAŠI KORISNICI KAŽU</h1>
+          <p class="description">
+            Vaš uspjeh je naš cilj! Iskustva studenata koji su ostvarili svoje ideje uz pomoć naše platforme!
+            Pročitajte njihove priče i saznajte kako su razvili svoje vještine i projekte do uspjeha.
+          </p>
+        </div>
+      </v-col>
+
+      <v-col cols="12" md="6">
+        <div
+          class="testimonial"
+          @mouseenter="stopAutoChange"
+          @mouseleave="startAutoChange"
+        >
+          <v-icon color="cyan" class="quote-icon">mdi-format-quote-open</v-icon>
+          <p class="testimonial-text">
+            "{{ testimonials[currentTestimonial].text }}"
+          </p>
+          <div class="author">
+            <div class="author-details">
+              <h3 class="author-name">
+                {{ testimonials[currentTestimonial].author }}
+              </h3>
+              <p class="author-title">
+                {{ testimonials[currentTestimonial].title }}
+              </p>
+            </div>
           </div>
+          <div class="dots">
+            <span
+              v-for="(testimonial, index) in testimonials"
+              :key="index"
+              class="dot"
+              :class="{ active: index === currentTestimonial }"
+              @click="setTestimonial(index)"
+            ></span>
           </div>
-      </v-sheet>
-    </v-carousel-item>
-  </v-carousel>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
+
     <!--Statistika-->
-    <br><br><br><br>
+    <br><br>
   <div class="statistics-container">
     <div class="statistics">
       <div class="statistic">
@@ -72,7 +131,7 @@
           class="icon"
         />
         <h2 class="count">{{ projectsCount }}+</h2>
-        <p class="description">Projects</p>
+        <p class="description">Projekata</p>
       </div>
       <div class="statistic">
         <img
@@ -81,7 +140,7 @@
           class="icon"
         />
         <h2 class="count">{{ usersCount }}+</h2>
-        <p class="description">Users</p>
+        <p class="description">Korisnika</p>
       </div>
       <div class="statistic">
         <img
@@ -90,13 +149,14 @@
           class="icon"
         />
         <h2 class="count">{{ completedProjectsCount }}+</h2>
-        <p class="description">Completed projects</p>
+        <p class="description">Završenih projekata</p>
       </div>
     </div>
   </div>
     <br><br><br><br>
     <!--Vijesti-->
     <div>
+      <h1 class="news-title">Inovativni Kutak: Svijet Tehnologije na Dlanu</h1><br>
       <News/>
     </div>
 
@@ -104,191 +164,336 @@
 
 <script setup>
 
-  import {ref, onMounted} from 'vue';
+import {ref, onMounted, onBeforeUnmount} from 'vue';
 
-  // Testimonials data
-  const testimonials = ref([
+// recenzije
+
+// Reaktivni podaci
+const currentTestimonial = ref(0);
+const testimonials = ref([
   {
-    text: 'Rad sa SkillHubProjects omogućio mi je da se povežem sa zanimljivim projektima i unaprijedim svoje profesionalne vještine',
-    author: 'Ivan - Student',
+    text: "SummitVision mi je omogućio da se fokusiram na vlastiti projekt, uz podršku mentora kojeg sam sama odabrala. Njihovo stručno vodstvo i savjeti bili su ključni za moj napredak.",
+    author: "Ana Petrović",
+    title: "Studentica Informatike",
   },
   {
-    text: 'Odličan tim i izvanredno iskustvo! Preporučujem svakome.',
-    author: 'Sara - Front-end Developer',
+    text: "Rad na vlastitom projektu na SummitVision platformi pružio mi je neprocjenjivo iskustvo. Mentor kojeg sam izabrao pomogao mi je razviti vještine i ostvariti ideju do kraja.",
+    author: "Marko Horvat",
+    title: "Student Ekonomije",
   },
   {
-    text: 'Profesionalizam i posvećenost. Definitivno bih ponovo radio s njima.',
-    author: 'Manuel - UX Designer',
+    text: "Ova platforma omogućila mi je da svoje ideje pretvorim u stvarnost. Zahvaljujući stručnom mentorstvu, mogla sam svladati izazove i unaprijediti svoj projekt.",
+    author: "Ivana Kovač",
+    title: "Studentica Menadžmenta",
   },
-    {
-      text: '\n' +
-        '"Working with this team was an absolute pleasure. Excellent communication and top-notch results!"',
-      author: 'Ana, Full-stack Developer',
-    },
-  ]);
+  {
+    text: "SummitVision je izvrsna prilika za svakoga tko želi samostalno raditi na inovativnim idejama, uz stalnu podršku mentora. Naučio sam mnogo i stekao vrijedno iskustvo.",
+    author: "Luka Marić",
+    title: "Student Elektrotehnike",
+  },
+  {
+    text: "Oduševljena sam kako SummitVision kombinira fleksibilnost samostalnog rada s podrškom stručnih mentora. Pomoć mog mentora bila je ključna za napredak mog projekta.",
+    author: "Mia Jurić",
+    title: "Studentica Dizajna",
+  },
+]);
 
-  // Statistika podaci
-  const projectsCount = ref(0);
-  const usersCount = ref(0);
-  const completedProjectsCount = ref(0);
+const autoChangeInterval = ref(null);
 
-  // Funkcija za animaciju brojanja
-  function animateCount(property, target, duration) {
-    const startValue = property.value;
-    const startTime = performance.now();
+// Metode
+function setTestimonial(index) {
+  currentTestimonial.value = index;
+}
 
-    function updateCount(currentTime) {
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-      property.value = Math.floor(progress * (target - startValue) + startValue);
+function startAutoChange() {
+  autoChangeInterval.value = setInterval(() => {
+    currentTestimonial.value = (currentTestimonial.value + 1) % testimonials.value.length;
+  }, 3000);
+}
 
-      if (progress < 1) {
-        requestAnimationFrame(updateCount);
-      }
+function stopAutoChange() {
+  clearInterval(autoChangeInterval.value);
+}
+
+// Lifecycle hooks
+onMounted(() => {
+  startAutoChange();
+});
+
+onBeforeUnmount(() => {
+  stopAutoChange();
+});
+
+
+// Statistika podaci
+const projectsCount = ref(0);
+const usersCount = ref(0);
+const completedProjectsCount = ref(0);
+
+// Funkcija za animaciju brojanja
+function animateCount(property, target, duration) {
+  const startValue = property.value;
+  const startTime = performance.now();
+
+  function updateCount(currentTime) {
+    const timeElapsed = currentTime - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
+    property.value = Math.floor(progress * (target - startValue) + startValue);
+
+    if (progress < 1) {
+      requestAnimationFrame(updateCount);
     }
-
-    requestAnimationFrame(updateCount);
   }
 
-  // Animacija brojanja prilikom učitavanja stranice
-  onMounted(() => {
-    animateCount(projectsCount, 50, 2000); // 50+ projekata
-    animateCount(usersCount, 80, 2000); // 80+ korisnika
-    animateCount(completedProjectsCount, 500, 2000); // 500+ završenih projekata
-  });
+  requestAnimationFrame(updateCount);
+}
+
+// Animacija brojanja prilikom učitavanja stranice
+onMounted(() => {
+  animateCount(projectsCount, 50, 2000); // 50+ projekata
+  animateCount(usersCount, 80, 2000); // 80+ korisnika
+  animateCount(completedProjectsCount, 500, 2000); // 500+ završenih projekata
+});
+//Animacija za tehnologije
+  const technologies = ref([
+  {
+    name: 'React',
+    icon: 'mdi-react',
+    iconColor: 'blue',
+  },
+  {
+    name: 'Node.js',
+    icon: 'mdi-nodejs',
+    iconColor: 'green',
+  },
+  {
+    name: 'Vue.js',
+    icon: 'mdi-vuejs',
+    iconColor: 'green',
+  },
+  {
+    name: 'MongoDB',
+    icon: 'mdi-database',
+    iconColor: 'green',
+  },
+  {
+    name: 'Docker',
+    icon: 'mdi-docker',
+    iconColor: 'blue',
+  },
+  {
+    name: 'Angular',
+    icon: 'mdi-angular',
+    iconColor: 'red',
+  },
+  {
+    name: 'Python',
+    icon: 'mdi-language-python',
+    iconColor: 'blue',
+  },
+  ]);
 
 </script>
 
-<style scoped>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Keania+One&display=swap');
+.v-container {
+  max-width: 100% !important;
 
-.hero-container {
-  background-image: url('https://www.tportal.hr/media/thumbnail/w1000/2075534.jpeg');
-  background-size: cover;
-
-  position:relative;
-  padding: 100px 0;
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 85vh;
-  display: flex;
-  overflow: hidden;
 }
-.hero-container::before {
-  content: '';
+.hero-container {
+  position: relative;
+  width: 100%;
+  flex-direction: column;
+  height: 120vh;
+  overflow: hidden; /* Sakriva sve što izlazi iz okvira */
+}
+
+.hero-video {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Tamni sloj */
-  z-index: 1;
-}
-.hero-container > * {
-  position: relative;
-  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; /* Video je u pozadini */
 }
 
+.overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 2; /* Overlay sadržaj je iznad videa */
+  padding: 1rem;
+}
 
 .hero-title {
-  font-size: 4rem;
-  margin-bottom: 20px;
-  color: white;
-  font-weight: bolder;
+  font-family: 'Keania One', cursive;
+  font-size: 2.8rem !important;
+  font-style: italic;
 
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: white;
 
 }
 
 .hero-description {
-  font-size: 1.25rem;
-  line-height: 1.6;
-  margin-bottom: 30px;
-  max-width: 800px;
-  margin-left: auto;
-  font-weight: lighter;
-  margin-right: auto;
+  font-family:'Open Sans',sans-serif;
+  background: -webkit-linear-gradient(#ffffff, #4ad88c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
 }
 
 .hero-btn {
-  background-color: #c800ff;
-  color: white;
-  border: 2px solid white;
-
-  &:hover {
-    background-color: #8450bc;
-  }
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  background-color: #ffffff;
+  color: black;
 }
-
-.hero-section {
-  background-image: url('https://previews.123rf.com/images/peshkov/peshkov1905/peshkov190500374/128578729-abstract-glowing-circuit-coding-background-programming-and-technology-concept-3d-rendering.jpg');
-  background-size: cover;
-  background-position: center;
-  height: 50vh;
-  color: white;
+/*tekst sa slikom ispod videa*/
+h1{
+  font-style: normal;
+  text-transform: uppercase;
+}
+h2 {
   font-weight: bold;
-  padding:40px 0;
-
-
+  font-style: italic;
 
 }
 
-.hero-title {
+.v-card {
+  background: linear-gradient(90deg, #060e33 0%, #1d3168 100%);
+  border-radius: 8px;
+  color: white;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.v-card-title {
+  font-size: 1.5rem;
+  text-align: left;
+  padding-bottom: 10px;
+}
+.v-card-text {
   font-size: 2rem;
-  font-weight: bold;
-  margin-bottom:20px;
+  margin-top: 10px;
+}
+.technologies-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+}
+.technology-items {
+  display: flex;
+  animation: move 25s linear infinite;
 }
 
-.hero-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-}
-
-.hero-button {
-  margin: 10px;
-  background-color: #ec1a4b;
-  color: white;
-  border: 2px solid white;
-
-  &:hover {
-    background-color: #1d3188;
+@keyframes move {
+  0% {
+    transform: translateX(0);
   }
-
-}
-
-.hero-button.outlined {
-  background-color: #ec1a4b;
-  color: white;
-  &:hover {
-    background-color: #1d3188;
+  100% {
+    transform: translateX(-50%);
   }
-  border: 2px solid white;
-
+}
+.technology-item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+.technology-item .headline {
+  font-size: 1.5rem;
+  margin-left: 8px;
 }
 /*Recenzije*/
-.testimonial-sheet {
-  background: linear-gradient(90deg, #060e33 0%, #8450bc 100%);
-
-  border-radius: 8px;
-  padding: 2rem;
-  text-align: center;
+.testimonials-section {
+  background-color: #121212;
+  color: white;
+  padding: 40px 20px;
 }
-
+.testimonials-header {
+  text-align: left;
+}
+.subtitle {
+  color: #00ffc8;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.main-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #00ffc8;
+  margin: 10px 0;
+}
+.description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #ccc;
+}
+.testimonial {
+  text-align: left;
+  background-color: transparent;
+}
+.quote-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
 .testimonial-text {
-  font-size: 1.2rem;
-  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  color: #ddd;
 }
-
-.testimonial-author {
-  font-size: 1rem;
-  color: #ffffff;
-  font-style: italic;
+.author {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
+.author-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-align: right;
+}
+.author-title {
+  font-size: 14px;
+  color: #ccc;
+  text-align: right;
+}
+.dots {
+  display: flex;
+  margin-top: 20px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #555;
+  margin-right: 8px;
+  cursor: pointer;
+}
+.dot.active {
+  background-color: #00ffc8;
 }
 /*Statistika*/
 
 .statistics-container {
-  background-color: #3d3d9f;
+  background: linear-gradient(90deg, #060e33 0%, #1d3168 100%);
   padding: 30px;
   border-radius: 10px;
   width: 80%;
@@ -331,6 +536,14 @@
   .statistic {
     margin-bottom: 20px;
   }
+}
+.news-title{
+  background: -webkit-linear-gradient(#30c374, rgba(255, 255, 255, 0.93));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Keania One', cursive;
+  font-style: italic;
+  text-align: center;
 }
 
 </style>

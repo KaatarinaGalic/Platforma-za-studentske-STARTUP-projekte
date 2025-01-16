@@ -127,7 +127,7 @@ function closeTermsDialog() {
 }
 
 .v-card {
-  background-color: #1e1e1e; /* Svijetlija pozadina za iskocni prozor */
+  background-color: #1e1e1e;
 }
 
 .v-card-text p {

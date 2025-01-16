@@ -13,23 +13,22 @@
           <v-card-text class="text-center" style="background-color: transparent;">
             <v-row>
               <v-col>
-                <h1 class="display-1 gradient-text">Welcome to SkillHubProjects</h1>
+                <h1 class="display-1 gradient-text">Dobrodošli na SummitVision</h1>
               </v-col>
             </v-row>
 
             <v-row>
               <v-col>
                 <p>
-                  Our platform brings together professionals from various industries, enabling them to work on innovative projects and achieve their professional goals. Whether you are an experienced expert with a wealth of knowledge or someone just starting your career, at SkillHubProjects, you’ll find opportunities that match your skills and ambitions.
+                  Naša platforma, SummitVision, okuplja studente iz različitih područja, omogućujući im rad na inovativnim projektima i ostvarenje profesionalnih i akademskih ciljeva. Bez obzira jeste li iskusni student s bogatim iskustvom ili tek započinjete svoje putovanje, SummitVision nudi prilike prilagođene vašim vještinama i ambicijama.
                   <br><br>
-                  Our mission is to connect talented individuals and teams to create something extraordinary together. We believe that the power of collaboration is the key to success, which is why we provide a space where creativity, knowledge, and passion come to life. Our community allows you not only to expand your professional horizons but also to build valuable connections and learn from others.
+                  Pružamo podršku i resurse koji olakšavaju razvoj vaših ideja, omogućujući vam povezivanje s mentorima i unapređenje znanja. Naša platforma osmišljena je kako bi vaše ideje postale stvarnost.
                   <br><br>
-                  At SkillHubProjects, everyone has the opportunity to bring their ideas to life, no matter how ambitious they are. Our platform offers easy-to-use tools for connecting with clients, managing projects, and tracking your progress, allowing you to focus entirely on what you do best. Additionally, we offer resources and support to help you develop your skills and advance your career.
-                  <br><br>
-                  SkillHubProjects is more than just a platform—it’s a community that fosters growth, innovation, and collaboration. Join us and become part of a network of professionals who create new value and bring ideas to life every day. At SkillHubProjects, your ideas and skills take center stage, and the possibilities for advancement are endless.
+                  SummitVision je više od platforme – to je zajednica koja potiče rast, inovaciju i suradnju. Pridružite nam se i postanite dio mreže studenata koji svakodnevno ostvaruju svoje ideje i stvaraju novu vrijednost. Na SummitVision platformi vaše vještine i ambicije dolaze do izražaja, a mogućnosti za napredak su neograničene.
                 </p>
               </v-col>
             </v-row>
+
           </v-card-text>
         </v-card>
       </v-col>
@@ -38,12 +37,12 @@
     <!-- Our Team odjeljak -->
     <v-row class="my-4">
       <v-col cols="12">
-        <h2 class="text-center gradient-text">Our Team</h2>
+        <h2 class="text-center gradient-text">Organizirajte sastanak s mentorom po vašem izboru.</h2>
       </v-col>
     </v-row>
 
     <v-row>
-      <!-- Kartica za Marcus Obrien -->
+      <!-- Kartica za Marko Marić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -52,21 +51,21 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
-            <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg" cover></v-img>
+            <v-img src="https://ocdn.eu/pulscms-transforms/1/ezNk9kqTURBXy8yMTYwM2E2ZTM5ZmQ2NTJmZTBkMmYwMmU4OGEyMjMyZi5qcGVnkZMCzQHCAN4AAqEwBaExAg" cover></v-img>
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">Marcus Obrien</v-list-item-title>
-            <v-list-item-subtitle>Network Engineer</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Marko Marić</v-list-item-title>
+            <v-list-item-subtitle>Mrežni inženjer</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
 
-      <!-- Kartica za Anna Rich -->
+      <!-- Kartica za Ana Kovačić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -75,7 +74,7 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
@@ -83,13 +82,13 @@
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">Anna Rich</v-list-item-title>
-            <v-list-item-subtitle>Product Designer</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Ana Kovačić</v-list-item-title>
+            <v-list-item-subtitle>Dizajner proizvoda</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
 
-      <!-- Kartica za John Smith -->
+      <!-- Kartica za Ivan Horvat -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -98,7 +97,7 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
@@ -106,15 +105,15 @@
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">John Smith</v-list-item-title>
-            <v-list-item-subtitle>Project Manager</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Ivan Horvat</v-list-item-title>
+            <v-list-item-subtitle>Voditelj projekta</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
     </v-row>
 
     <v-row>
-      <!-- Kartica za Jane Doe -->
+      <!-- Kartica za Marija Babić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -123,7 +122,7 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
@@ -131,13 +130,13 @@
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">Jane Doe</v-list-item-title>
-            <v-list-item-subtitle>Software Developer</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Marija Babić</v-list-item-title>
+            <v-list-item-subtitle>Razvojni programer</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
 
-      <!-- Kartica za Emily Davis -->
+      <!-- Kartica za Ivana Šarić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -146,7 +145,7 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
@@ -154,13 +153,13 @@
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">Emily Davis</v-list-item-title>
-            <v-list-item-subtitle>UX/UI Designer</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Ivana Šarić</v-list-item-title>
+            <v-list-item-subtitle>UX/UI dizajner</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
 
-      <!-- Kartica za Michael Brown -->
+      <!-- Kartica za Luka Kovačić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -169,7 +168,7 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
@@ -177,15 +176,15 @@
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">Michael Brown</v-list-item-title>
-            <v-list-item-subtitle>Network Engineer</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Luka Kovačić</v-list-item-title>
+            <v-list-item-subtitle>Mrežni inženjer</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
     </v-row>
 
     <v-row>
-      <!-- Kartica za Sarah Wilson -->
+      <!-- Kartica za Lucija Novak -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -194,7 +193,7 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
@@ -202,13 +201,13 @@
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">Sarah Wilson</v-list-item-title>
-            <v-list-item-subtitle>Content Strategist</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Lucija Novak</v-list-item-title>
+            <v-list-item-subtitle>Strateg za sadržaj</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
 
-      <!-- Kartica za David Lee -->
+      <!-- Kartica za Tomislav Jurić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -217,21 +216,21 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
-            <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcCHRmWBEwkz0a7PXcdvhJw95-xFoLYMrXftLyb4Ed0Ut0ykEOYgtgyHMjb1p7WYeG80g&usqp=CAU" cover></v-img>
+            <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-knBUQGbzvnKzyEs5xLOQdhm22z3yamHVrA&s" cover></v-img>
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">David Lee</v-list-item-title>
-            <v-list-item-subtitle>Digital Marketing Specialist</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Tomislav Jurić</v-list-item-title>
+            <v-list-item-subtitle>Stručnjak za digitalni marketing</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
 
-      <!-- Kartica za Olivia Martinez -->
+      <!-- Kartica za Jelena Marković -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -240,7 +239,7 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
@@ -248,15 +247,15 @@
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">Olivia Martinez</v-list-item-title>
-            <v-list-item-subtitle>Data Analyst</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Jelena Marković</v-list-item-title>
+            <v-list-item-subtitle>Analitičar podataka</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
     </v-row>
 
     <v-row>
-      <!-- Kartica za Ryan Taylor -->
+      <!-- Kartica za Nikola Petrović -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -265,7 +264,7 @@
         >
           <v-avatar
             color="grey"
-            rounded="0"
+            rounded="50"
             size="150"
             class="my-4"
           >
@@ -273,8 +272,8 @@
           </v-avatar>
 
           <v-list-item class="text-center text-white">
-            <v-list-item-title class="text-h6">Ryan Taylor</v-list-item-title>
-            <v-list-item-subtitle>Customer Support Specialist</v-list-item-subtitle>
+            <v-list-item-title class="text-h6">Nikola Petrović</v-list-item-title>
+            <v-list-item-subtitle>Stručnjak za korisničku podršku</v-list-item-subtitle>
           </v-list-item>
         </v-card>
       </v-col>
@@ -282,25 +281,24 @@
 
   </v-container>
 
-
-
 </template>
 
-<script setup>
-
-
-</script>
 
 <style scoped>
 .white--text {
   color: white;
 }
+p {
+  font-size: 1.3rem;
+}
 
 .gradient-text {
-  background: linear-gradient(90deg, #00c6ff 0%, #ff00c6 100%);
+  font-family:'Keania One',sans-serif;
+  background: -webkit-linear-gradient(#00ffcc,#008080);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 3rem;
   font-weight: bold;
 }
+
 </style>

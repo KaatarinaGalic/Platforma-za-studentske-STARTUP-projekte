@@ -1,17 +1,10 @@
 <template>
   <div>
-    <!-- Pretraživanje -->
-    <v-text-field
-      v-model="search"
-      prepend-icon="mdi-magnify"
-      label="Search"
-      class="mx-2"
-      full-width
-    ></v-text-field>
+    <h1 class="text-center my-4 naslov">Zakorači u svijet inovativnih studentskih projekata</h1>
 
     <!-- Log In/Log Out Button -->
     <v-btn
-      :color="isLoggedIn ? 'green' : 'blue'"
+      :color="isLoggedIn ? 'green' : 'white'"
       class="mx-2"
       @click="isLoggedIn ? handleLogout() : loginDialog = true"
       style="float: right;"
@@ -25,6 +18,14 @@
            v-if="isLoggedIn"
     >Change Password
     </v-btn>
+    <!-- Pretraživanje --><br><br><br><br>
+    <v-text-field
+      v-model="search"
+      prepend-icon="mdi-magnify"
+      label="Pretraživanje"
+      class="mx-2"
+      full-width
+    ></v-text-field>
 
     <!-- Log In Dialog -->
     <v-dialog v-model="loginDialog" max-width="400" class="login-dialog">
@@ -88,7 +89,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <!-- Prikaz kartica -->
+    <!-- Prikaz kartica --><br><br>
     <div class="d-flex flex-wrap justify-center">
       <v-card
         v-for="card in paginatedCards"
@@ -144,7 +145,7 @@
       <v-pagination
         v-model="currentPage"
         :length="totalPages"
-        :total-visible="12"
+        :total-visible="3"
         class="my-4"
       ></v-pagination>
     </v-container>
@@ -162,7 +163,7 @@ export default {
       currentPage: 1,
       itemsPerPage: 9,
       projects: [],
-      staticTotalPages: 12,
+      staticTotalPages: 3,
       loginDialog: false,
       email: '',
       passwordChangeDialog: false,
@@ -307,6 +308,14 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Keania+One&display=swap');
+.naslov{
+  background: -webkit-linear-gradient(#e8edef, #4ad88c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-family: 'Keania One', cursive;
+}
 .login-dialog .v-card {
   background-image: url('https://image.dnevnik.hr/media/images/1920x1080/Jan2019/61625743-mlijecna-staza.jpg'); /* Zamenite 'your-image-url.jpg' sa URL-om vaše slike */
   background-size: cover;
@@ -318,6 +327,7 @@ export default {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
+
 }
 
 .v-card {

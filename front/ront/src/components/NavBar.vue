@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <!-- Navigacijska traka -->
-    <v-app-bar app color="black" dark prominent>
-      <v-toolbar-title class="title">SkillHubProjects</v-toolbar-title>
+    <v-app-bar app color="black" dark prominent >
+      <v-toolbar-title class="title">SummitVision</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <!-- Gumb za otvaranje bocnog izbornika na mob ekranima -->
@@ -10,15 +10,18 @@
         v-if="isMobile"
         @click="drawer = !drawer"
         class="white-icon"
-      ></v-app-bar-nav-icon>
+      > <!-- Dodavanje hamburger ikone -->
+        <v-icon large>mdi-menu</v-icon>
+
+      </v-app-bar-nav-icon>
 
       <!-- Stavke u izborniku za vece ekrane -->
       <template v-if="!isMobile">
-        <v-btn text @click="navigateTo('')">Home</v-btn>
-        <v-btn text @click="navigateTo('projects')">Projects</v-btn>
-        <v-btn text @click="navigateTo('registration')">Registration</v-btn>
-        <v-btn text @click="navigateTo('about')">About</v-btn>
-        <v-btn text @click="navigateTo('contact')">Contact</v-btn>
+        <v-btn text @click="navigateTo('')">Početna</v-btn>
+        <v-btn text @click="navigateTo('projects')">Projekti</v-btn>
+        <v-btn text @click="navigateTo('registration')">Prijava</v-btn>
+        <v-btn text @click="navigateTo('about')">O nama</v-btn>
+        <v-btn text @click="navigateTo('contact')">Kontakt</v-btn>
       </template>
     </v-app-bar>
 
@@ -29,7 +32,7 @@
       temporary
       mobile-break-point="960"
       :style="{ backgroundColor: 'black' }"
-    >
+    ><br>
       <v-list>
         <v-list-item
           v-for="item in menu"
@@ -89,6 +92,12 @@ function navigateTo(page) {
 </script>
 
 <style lang="scss" scoped>
+.v-app-bar-nav-icon .v-icon {
+  color: white !important;
+  font-size: 36px;
+  visibility: visible; /* Osigurava da je ikona vidljiva */
+  opacity: 1;
+}
 .v-app-bar {
   background-color: black;
   border-bottom: 2px solid white;
@@ -103,18 +112,17 @@ function navigateTo(page) {
   text-align: left;
   font-weight: 800;
   font-size: clamp(25px, 4vw, 28px);
-  background: linear-gradient(90deg, #00c6ff 0%, #ff00c6 100%);
+  background: -webkit-linear-gradient(#00ffcc,#008080);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 5px rgb(119, 179, 188);
+
   z-index: 1;
 }
 
 .v-btn {
-  background: linear-gradient(90deg, #00c6ff 0%, #ff00c6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color:white;
   font-weight: bolder;
+  text-shadow: 2px 2px 5px rgb(119, 179, 188);
   font-size: medium;
   margin: 0 10px;
 
