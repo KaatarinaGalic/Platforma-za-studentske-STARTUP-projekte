@@ -172,7 +172,7 @@ export default {
 /*Pozadinska slika*/
 .contact-form {
   font-family: Arial, sans-serif;
-  background-image: url('https://png.pngtree.com/background/20240112/original/pngtree-3d-rendering-illustration-of-development-and-programming-picture-image_7232775.jpg');
+  background-image: url('https://www.noob.ba/wp-content/uploads/2021/12/andras-vas-Bd7gNnWJBkU-unsplash-1-scaled.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -185,6 +185,7 @@ export default {
 
   .content {
     margin-top: 40px;
+
   }
 
   .icon {
@@ -203,7 +204,7 @@ export default {
 
   .form-container {
     padding: 30px;
-    background-color: white;
+    background-color: white !important;
     color: #000;
   }
 

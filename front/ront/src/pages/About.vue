@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="about">
     <!-- About Us Tekst -->
     <v-row>
       <v-col cols="12">
@@ -35,6 +35,7 @@
     </v-row>
 
     <!-- Our Team odjeljak -->
+
     <v-row class="my-4">
       <v-col cols="12">
         <h2 class="text-center gradient-text">Organizirajte sastanak s mentorom po vašem izboru.</h2>
@@ -300,5 +301,6 @@ p {
   font-size: 3rem;
   font-weight: bold;
 }
+
 
 </style>

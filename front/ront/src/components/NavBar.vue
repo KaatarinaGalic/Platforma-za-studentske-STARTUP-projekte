@@ -19,7 +19,7 @@
       <template v-if="!isMobile">
         <v-btn text @click="navigateTo('')">Početna</v-btn>
         <v-btn text @click="navigateTo('projects')">Projekti</v-btn>
-        <v-btn text @click="navigateTo('registration')">Prijava</v-btn>
+        <v-btn text @click="navigateTo('register')">Prijava</v-btn>
         <v-btn text @click="navigateTo('about')">O nama</v-btn>
         <v-btn text @click="navigateTo('contact')">Kontakt</v-btn>
       </template>
@@ -64,7 +64,7 @@ const menu = [
   { title: 'Home', link: '' },
   { title: 'Contact', link: 'contact' },
   { title: 'About', link: 'about' },
-  { title: 'Registration', link: 'registration' },
+  { title: 'Registration', link: 'register' },
   { title: 'Projects', link: 'projects' }
 ]
 

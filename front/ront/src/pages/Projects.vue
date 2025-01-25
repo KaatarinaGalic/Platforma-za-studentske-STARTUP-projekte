@@ -90,7 +90,7 @@
       </v-card>
     </v-dialog>
     <!-- Prikaz kartica --><br><br>
-    <div class="d-flex flex-wrap justify-center">
+    <v-container class="d-flex flex-wrap justify-center">
       <v-card
         v-for="card in paginatedCards"
         :key="card.naziv"
@@ -138,7 +138,7 @@
         </v-responsive>
       </v-card>
 
-    </div>
+    </v-container>
 
     <!-- Paginacija -->
     <v-container class="text-center my-4">
@@ -299,7 +299,7 @@ export default {
     },
     totalPages() {
       return Math.ceil(this.filteredProjects.length / this.itemsPerPage);
-    },
+    },//
   },
   mounted() {
     this.fetchProjects();
@@ -315,6 +315,7 @@ export default {
   -webkit-text-fill-color: transparent;
   font-weight: bold;
   font-family: 'Keania One', cursive;
+
 }
 .login-dialog .v-card {
   background-image: url('https://image.dnevnik.hr/media/images/1920x1080/Jan2019/61625743-mlijecna-staza.jpg'); /* Zamenite 'your-image-url.jpg' sa URL-om vaše slike */
@@ -344,6 +345,10 @@ export default {
 
 .v-card-subtitle {
   text-align: center;
+}
+.v-container {
+  max-width: 100% !important;
+
 }
 
 </style>
