@@ -26,7 +26,7 @@
             <v-card>
               <v-img
                 :src="article.urlToImage"
-                height="200px"
+                height="150px"
               ></v-img>
               <v-card-title>{{ article.title }}</v-card-title>
               <v-card-subtitle>{{ article.publishedAt }}</v-card-subtitle>
@@ -94,4 +94,3 @@ const paginatedArticles = computed(() => {
   return pages;
 });
 </script>
-

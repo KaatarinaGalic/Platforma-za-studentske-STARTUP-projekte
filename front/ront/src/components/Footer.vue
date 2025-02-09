@@ -4,7 +4,7 @@
     class="white--text pt-8 pb-4 full-width-footer"
   >
     <v-container fluid>
-      <!-- Gornji dio s linkovima na društvene mreže -->
+      <!-- Društvene mreže -->
       <v-row justify="center" class="mb-4">
         <v-btn icon href="https://www.facebook.com/fpmoz.ba/?locale=hr_HR" class="mx-2" target="_blank">
           <v-icon color="#3b5998">mdi-facebook</v-icon>
@@ -23,64 +23,66 @@
       <!-- Srednji dio s navigacijom -->
       <v-row justify="center" class="mb-4">
         <v-col cols="auto">
-          <v-btn text class="white--text" href="#about">
-            about
+          <v-btn text class="white--text" href="about">
+            O nama
           </v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn text class="white--text" href="#contact">
-            contact
+          <v-btn text class="white--text" href="contact">
+            Kontakt
           </v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn text class="white--text" @click="showTermsDialog">
-            terms of use
+            Uvjeti korištenja
           </v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn text class="white--text" @click="showPrivacyDialog">
-            privacy policy
+            Pravila privatnosti
           </v-btn>
         </v-col>
       </v-row>
 
       <!-- Donji dio s kopirajtom -->
       <v-row justify="center">
-        <p>© 2024 SkillHubProjects. All rights reserved.</p>
+        <p>© 2025 SummitVision. Sva prava pridržana.</p>
       </v-row>
 
-      <!-- Iskočni prozor za Terms of Use -->
+      <!-- Iskočni prozor za Uvjeti korištenja -->
       <v-dialog v-model="termsDialog" max-width="600px">
         <v-card>
-          <v-card-title class="text-h6 text-center">Terms of Use</v-card-title>
+          <v-card-title class="text-h6 text-center">Uvjeti korištenja</v-card-title>
           <v-card-text class="text-center" style="line-height: 1.5;">
-            <p><strong>By accessing this website, you agree to the following terms:</strong></p>
-            <p><strong>Use:</strong> You may use the site only for lawful purposes. Any activity that may harm others is prohibited.</p>
-            <p><strong>Intellectual Property:</strong> All content is protected by copyright. You may not use it without our permission.</p>
-            <p><strong>Limitation of Liability:</strong> We are not responsible for any damages or losses that may arise from using this site. Use of the site is at your own risk.</p>
-            <p><strong>Changes:</strong> We reserve the right to modify these terms. Please check the terms regularly.</p>
-            <p><strong>For additional information, please contact our support.</strong></p>
+            <strong>Pristupom web stranici SummitVision prihvaćate sljedeće uvjete:</strong><br>
+            <strong>Upotreba:</strong> Web stranicu smijete koristiti isključivo u zakonite svrhe. Svaka aktivnost koja može nanijeti štetu drugima je zabranjena.<br>
+            <strong>Intelektualno vlasništvo:</strong> Sav sadržaj zaštićen je autorskim pravima. Ne smijete ga koristiti bez našeg dopuštenja.<br>
+            <strong>Ograničenje odgovornosti:</strong> Ne odgovaramo za štetu ili gubitke koji mogu nastati korištenjem ove stranice. Korištenje stranice je na vlastitu odgovornost.<br>
+            <strong>Promjene:</strong> Zadržavamo pravo izmjene ovih uvjeta. Molimo redovito provjeravajte uvjete.<br>
+            <strong>Za dodatne informacije kontaktirajte našu podršku.</strong>
           </v-card-text>
+
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="closeTermsDialog">Close</v-btn>
+            <v-btn color="primary" @click="closeTermsDialog">Zatvori</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
-      <!-- Iskočni prozor za Privacy Policy -->
+      <!-- Iskočni prozor za Pravila privatnosti -->
       <v-dialog v-model="privacyDialog" max-width="600px">
         <v-card>
-          <v-card-title class="text-h6 text-center">Privacy Policy</v-card-title>
+          <v-card-title class="text-h6 text-center">Pravila privatnosti</v-card-title>
           <v-card-text class="text-center" style="line-height: 1.5;">
-            <p><strong>At SkillHubProjects, your privacy is important to us.</strong> This privacy policy explains how we collect, use, and protect your personal data.</p>
-            <p><strong>Information We Collect:</strong> We collect information when you register, submit inquiries, or use our site. We use this information to improve our services, communicate with you, and analyze site usage.</p>
-            <p><strong>Use of Information:</strong> We do not share your data with third parties without your explicit consent. We maintain high security standards to ensure your privacy and protect your data from unauthorized access, loss, or misuse.</p>
-            <p><strong>Contact:</strong> For more information, feel free to contact us through our contact details.</p>
+            <strong>U SummitVisionu vaša privatnost nam je važna.</strong> Ova pravila privatnosti objašnjavaju kako prikupljamo, koristimo i štitimo vaše osobne podatke.<br>
+            <strong>Informacije koje prikupljamo:</strong> Prikupljamo informacije kada se registrirate, pošaljete upite ili koristite našu stranicu. Ove informacije koristimo za poboljšanje naših usluga, komunikaciju s vama i analizu korištenja stranice.<br>
+            <strong>Upotreba informacija:</strong> Vaše podatke ne dijelimo s trećim stranama bez vašeg izričitog pristanka. Održavamo visoke standarde sigurnosti kako bismo osigurali vašu privatnost i zaštitili vaše podatke od neovlaštenog pristupa, gubitka ili zloupotrebe.<br>
+            <strong>Kontakt:</strong> Za više informacija slobodno nas kontaktirajte putem naših kontakt podataka.
           </v-card-text>
+
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="closePrivacyDialog">Close</v-btn>
+            <v-btn color="primary" @click="closePrivacyDialog">Zatvori</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -112,7 +114,6 @@ function closeTermsDialog() {
 </script>
 
 <style scoped>
-/* Stilovi za footer */
 .full-width-footer {
   background-color: #0d0d0d;
   width: 100%;

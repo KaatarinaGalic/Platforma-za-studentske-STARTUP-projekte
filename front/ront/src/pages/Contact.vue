@@ -1,6 +1,6 @@
 <template>
   <v-container class="contact-form" fluid>
-    <!-- Alert poruka na vrhu stranice -->
+    <!-- Alert poruke na vrhu stranice -->
     <v-alert
       v-if="alert.visible"
       :type="alert.type"
@@ -75,101 +75,203 @@
           </v-col>
         </v-row>
       </v-col>
-      <!--Desna strana unos podataka -->
+
+      <!-- Desna strana unos podataka -->
       <v-col cols="12" md="6">
         <v-form ref="form">
           <v-card class="form-container">
-            <v-card-title>Pošalji poruku</v-card-title>
+            <v-card-title>Pošaljite poruku</v-card-title>
             <v-card-text>
               <v-text-field
                 v-model="form.name"
-                label="Name"
-                :rules="[v => !!v || 'Name is required']"
+                label="Ime i prezime"
+                :rules="[v => !!v || 'Ime i prezime su obavezni']"
                 required
               ></v-text-field>
+
               <v-text-field
                 v-model="form.email"
                 label="Email"
-                :rules="[
-                  v => !!v || 'Email is required',
-                  v => /.+@.+\..+/.test(v) || 'Email must be valid'
-                ]"
+                :rules="[v => !!v || 'Email je obavezan', v => /.+@.+\..+/.test(v) || 'Email mora biti validan']"
                 required
               ></v-text-field>
+
               <v-text-field
                 v-model="form.message"
-                label="Type your message..."
-                :rules="[v => !!v || 'Message is required']"
+                label="Napišite poruku..."
+                :rules="[v => !!v || 'Poruka je obavezna']"
                 required
               ></v-text-field>
+
+              <!-- Radio Group for Mentor Option -->
+              <v-radio-group v-model="form.mentorStatus" row>
+                <v-radio label="Mentor" value="mentor"></v-radio>
+                <v-radio label="Bez mentora" value="noMentor"></v-radio>
+              </v-radio-group>
+
+              <!-- Select for Mentor -->
+              <v-select
+                v-if="form.mentorStatus === 'mentor'"
+                v-model="form.selectedMentor"
+                :items="mentors"
+                label="Odaberite mentora"
+                :rules="[v => !!v || 'Odabir mentora je obavezan']"
+                @change="loadAvailableTimes"
+              ></v-select>
+
+              <!-- Dodavanje kalendara za odabir datuma -->
+              <v-date-picker
+                v-if="form.mentorStatus === 'mentor' && form.selectedMentor"
+                v-model="form.selectedDate"
+                label="Odaberite datum"
+                max-width="368"
+                @update:modelValue="loadAvailableTimes"
+              ></v-date-picker>
+
+              <!-- Prikaz odabranog datuma -->
+              <v-row v-if="form.selectedDate">
+                <v-col>
+                  <p><strong>Odabrani datum: </strong>{{ formatDate(form.selectedDate) }}</p>
+                </v-col>
+              </v-row>
+
+              <!-- Odabir slobodnih satnica -->
+              <v-select
+                v-if="form.availableTimes.length > 0"
+                v-model="form.selectedTime"
+                :items="form.availableTimes"
+                label="Odaberite satnicu"
+                :rules="[v => !!v || 'Odabir satnice je obavezan']"
+                required
+              ></v-select>
+
+              <!-- Prikaz odabrane satnice -->
+              <v-row v-if="form.selectedTime">
+                <v-col>
+                  <p><strong>Odabrani termin: </strong>{{ form.selectedTime }}</p>
+                </v-col>
+              </v-row>
+
             </v-card-text>
             <v-card-actions>
-              <v-btn color="primary" variant="elevated"  @click="sendMessage">Send</v-btn>
-              <v-btn color="black" variant="tonal" @click="clear">Clear</v-btn>
+              <v-btn color="primary" variant="elevated" @click="sendMessage">Pošaljite</v-btn>
+              <v-btn color="black" variant="tonal" @click="clear">Očisti</v-btn>
             </v-card-actions>
           </v-card>
         </v-form>
       </v-col>
     </v-row>
   </v-container><br><br>
-
-
+  <Faq/>
 </template>
 
 <script>
-import Faq from '@/components/Faq.vue';
 export default {
   name: "ContactForm",
-  components: {
-    Faq
-  },
   data() {
     return {
       form: {
         name: '',
         email: '',
-        message: ''
+        message: '',
+        mentorStatus: '',
+        selectedMentor: '', // Za pohranu odabranog mentora
+        selectedDate: null, // Za pohranu odabranog datuma
+        selectedTime: '', // Za pohranu odabrane satnice
+        availableTimes: [] // Za pohranu slobodnih satnica
       },
       alert: {
         visible: false,
         type: '', // 'success' ili 'error'
         message: ''
+      },
+      mentors: [
+        'Marko Marić',
+        'Ana Kovačić',
+        'Ivan Horvat',
+        'Marija Babić',
+        'Ivana Šarić',
+        'Luka Kovačić',
+        'Lucija Novak',
+        'Tomislav Jurić',
+        'Jelena Marković',
+        'Nikola Petrović'
+      ],
+      mentorAvailability: {
+        'Marko Marić': {
+          '2025-01-30': ['09:00', '14:00', '16:00'],
+          '2025-02-01': ['10:00', '12:00', '15:00'],
+          '2025-02-07': ['10:00', '12:00', '15:00'],
+        },
+        'Ana Kovačić': {
+          '2025-01-30': ['08:00', '13:00', '17:00'],
+          '2025-02-01': ['09:00', '11:00', '14:00']
+        },
+        // Dodajite druge mentore i njihove dostupne satnice...
       }
     }
   },
   methods: {
     sendMessage() {
-      this.$refs.form.validate()
+      this.$refs.form.validate();
 
       if (this.$refs.form.$el.checkValidity()) {
         // Alert za poruke
         setTimeout(() => {
-          this.alert.message = 'The message was sent successfully'
-          this.alert.type = 'success'
-          this.alert.visible = true
-          this.clear()
-        }, 500)
+          this.alert.message = 'Poruka je uspješno poslana';
+          this.alert.type = 'success';
+          this.alert.visible = true;
+          this.clear();
+        }, 500);
       } else {
         // Ako forma nije ispravna
-        this.alert.message = 'Please fill in all required fields'
-        this.alert.type = 'error'
-        this.alert.visible = true
+        this.alert.message = 'Molimo ispunite sva obavezna polja';
+        this.alert.type = 'error';
+        this.alert.visible = true;
       }
     },
+    loadAvailableTimes() {
+      // Provjerite ima li slobodnih satnica za odabrani datum i mentora
+      console.log("Odabrani mentor:", this.form.selectedMentor);
+      console.log("Odabrani datum:", this.form.selectedDate);
+      if (this.form.selectedMentor && this.form.selectedDate) {
+        const mentor = this.form.selectedMentor;
+        const date = new Date(this.form.selectedDate);
+        date.setMinutes(date.getMinutes() - date.getTimezoneOffset()); // Prilagodba vremenske zone
+        const formattedDate = date.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+
+        console.log("Formatirani datum:", formattedDate);
+        console.log("Dostupne satnice:", this.mentorAvailability[mentor]?.[formattedDate] || []);
+
+        this.form.availableTimes = this.mentorAvailability[mentor]?.[formattedDate] || [];
+      } else {
+        this.form.availableTimes = [];
+      }
+
+    },
     clear() {
-      this.$refs.form.reset()
+      this.$refs.form.reset();
       this.form = {
         name: '',
         email: '',
-        message: ''
-      }
+        message: '',
+        mentorStatus: '',
+        selectedMentor: '',
+        selectedDate: null,
+        selectedTime: '',
+        availableTimes: []
+      };
+    },
+    formatDate(date) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(date).toLocaleDateString('hr-HR', options);
     }
   }
 }
 </script>
 
 <style lang="scss">
-/*Pozadinska slika*/
+/* Pozadinska slika */
 .contact-form {
   font-family: Arial, sans-serif;
   background-image: url('https://www.noob.ba/wp-content/uploads/2021/12/andras-vas-Bd7gNnWJBkU-unsplash-1-scaled.jpg');
@@ -185,7 +287,6 @@ export default {
 
   .content {
     margin-top: 40px;
-
   }
 
   .icon {
@@ -215,6 +316,20 @@ export default {
   /* Stil za alert na vrhu */
   .alert-top {
     margin-bottom: 20px;
+  }
+
+  .v-card {
+    background: linear-gradient(90deg, #554d78 0%, #704a70 100%);
+    border-radius: 8px;
+    color: white;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .contact-form input {
+    background-color: white;
   }
 }
 </style>

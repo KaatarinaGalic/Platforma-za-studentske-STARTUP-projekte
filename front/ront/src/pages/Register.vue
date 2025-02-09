@@ -1,202 +1,199 @@
 <template>
-  <br><br><br>
-
-  <v-sheet
-    class="position-relative background-image"
-    min-height="450"
-  >
-    <v-row class="text-center">
-      <v-col>
-        <h2 class="form-title">Sign Up for a New Project!</h2>
+  <v-container class="bg-gradient">
+    <!-- Naslov -->
+    <v-row justify="center" class="mb-4">
+      <v-col cols="12" md="8" lg="6">
+        <h1 class="text-center white--text">Prijava za projekt</h1>
       </v-col>
     </v-row>
-    <!-- Registracija forma -->
-    <form>
-      <v-text-field
-        v-model="state.name"
-        :counter="10"
-        :error-messages="v$.name.$errors.map(e => e.$message)"
-        label="Name"
-        required
-        @blur="v$.name.$touch"
-        @input="v$.name.$touch"
-      ></v-text-field>
 
-      <v-text-field
-        v-model="state.surname"
-        :counter="10"
-        :error-messages="v$.surname.$errors.map(e => e.$message)"
-        label="Surname"
-        required
-        @blur="v$.surname.$touch"
-        @input="v$.surname.$touch"
-      ></v-text-field>
+    <!-- Forma za registraciju i prijavu na projekt -->
+    <v-row justify="center">
+      <v-col cols="12" md="8" lg="6">
+        <v-form ref="form">
+          <!-- Osobni podaci -->
+          <v-text-field
+            v-model="state.name"
+            :error-messages="v$.name.$errors.map(e => e.$message)"
+            label="Ime"
+            required
+            @blur="v$.name.$touch"
+            @input="v$.name.$touch"
+            class="white--text"
+          ></v-text-field>
 
-      <v-text-field
-        v-model="state.email"
-        :error-messages="v$.email.$errors.map(e => e.$message)"
-        label="E-mail"
-        required
-        @blur="v$.email.$touch"
-        @input="v$.email.$touch"
-      ></v-text-field>
+          <v-text-field
+            v-model="state.surname"
+            :error-messages="v$.surname.$errors.map(e => e.$message)"
+            label="Prezime"
+            required
+            @blur="v$.surname.$touch"
+            @input="v$.surname.$touch"
+            class="white--text"
+          ></v-text-field>
 
-      <v-text-field
-        v-model="state.password"
-        :error-messages="v$.password.$errors.map(e => e.$message)"
-        label="Password"
-        :type="showPassword ? 'text' : 'password'"
-        required
-        @blur="v$.password.$touch"
-        @input="v$.password.$touch"
-        class="mb-4"
-      >
-        <template v-slot:append>
-          <v-icon
-            @click="showPassword = !showPassword"
-            class="cursor-pointer"
-            size="24"
-            style="margin-right: 8px;"
-          >
-            {{ showPassword ? 'mdi-eye-off' : 'mdi-eye' }}
-          </v-icon>
-        </template>
-      </v-text-field>
-      <v-btn
-        class="me-4"
-        @click="submitForm"
-      >
-        submit
-      </v-btn>
-      <v-btn @click="clear">
-        clear
-      </v-btn>
-    </form>
+          <v-text-field
+            v-model="state.email"
+            :error-messages="v$.email.$errors.map(e => e.$message)"
+            label="Email"
+            required
+            @blur="v$.email.$touch"
+            @input="v$.email.$touch"
+            class="white--text"
+          ></v-text-field>
 
-    <!-- Kartica za potvrdu -->
-    <v-fade-transition hide-on-leave>
-      <v-card
-        v-if="dialog"
-        append-icon="$close"
-        class="mx-auto"
-        elevation="16"
-        max-width="500"
-        title="Sign up"
-      >
-        <template v-slot:append>
-          <v-btn icon="$close" variant="text" @click="dialog = false"></v-btn>
-        </template>
+          <v-text-field
+            v-model="state.password"
+            :error-messages="v$.password.$errors.map(e => e.$message)"
+            label="Lozinka"
+            type="password"
+            required
+            @blur="v$.password.$touch"
+            @input="v$.password.$touch"
+            class="white--text"
+          ></v-text-field>
 
-        <v-divider></v-divider>
+          <!-- Odabir projekta -->
+          <v-radio-group v-model="isNewProject" row>
+            <v-radio label="Prijava za novi projekt" :value="true" class="white--text"></v-radio>
+            <v-radio label="Prijava za postojeći projekt" :value="false" class="white--text"></v-radio>
+          </v-radio-group>
 
-        <div class="py-12 text-center">
-          <v-icon
-            class="mb-6"
-            color="success"
-            icon="mdi-check-circle-outline"
-            size="128"
-          ></v-icon>
+          <!-- Poruka kada korisnik izabere postojeći projekt -->
+          <div v-if="!isNewProject && !state.selectedProject" class="white--text mt-4">
+            <p>Za prijavu na postojeće projekte, molimo Vas da spremite ove podatke za prijavu, a zatim posjetite stranicu <strong>Projekti</strong> i registrirate se. Kada se registrirate moći ćete odabrati postojeći projekt.</p>
+          </div>
 
-          <div class="text-h4 font-weight-bold">Sign-up successful!</div>
-        </div>
+          <!-- Polja za novi projekt -->
+          <div v-if="isNewProject">
+            <v-text-field
+              v-model="state.projectName"
+              label="Naziv projekta"
+              class="white--text"
+            ></v-text-field>
 
-        <v-divider></v-divider>
+            <v-textarea
+              v-model="state.projectDescription"
+              label="Opis projekta"
+              class="white--text"
+            ></v-textarea>
 
-        <div class="pa-4 text-end">
-          <v-btn
-            class="text-none"
-            color="medium-emphasis"
-            min-width="92"
-            variant="outlined"
-            rounded
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-        </div>
+            <v-text-field
+              v-model="state.projectTechnologies"
+              label="Tehnologije"
+              class="white--text"
+            ></v-text-field>
+          </div>
+
+          <!-- Gumb za potvrdu -->
+          <v-btn color="primary" class="mt-4" @click="submitForm">Pošalji prijavu</v-btn>
+        </v-form>
+      </v-col>
+    </v-row>
+
+    <!-- Dijalog za uspješnu prijavu -->
+    <v-dialog v-model="dialog" max-width="400">
+      <v-card>
+        <v-card-title class="text-h5">Prijava uspješna</v-card-title>
+        <v-card-text>Vaša prijava je uspješno poslana!</v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" text @click="dialog = false">U redu</v-btn>
+        </v-card-actions>
       </v-card>
-    </v-fade-transition>
-  </v-sheet>
+    </v-dialog>
+  </v-container>
 </template>
 
-<script setup>
-import { reactive, ref } from 'vue'
-import { useVuelidate } from '@vuelidate/core'
-import { email, required } from '@vuelidate/validators'
-import axios from 'axios'
+<script>
+import { ref } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email, minLength } from '@vuelidate/validators';
+import axios from 'axios';
 
-const initialState = {
-  name: '',
-  surname: '',
-  email: '',
-  password: ''
-}
+export default {
+  setup() {
+    const state = ref({
+      name: '',
+      surname: '',
+      email: '',
+      password: '',
+      projectName: '',
+      projectDescription: '',
+      projectTechnologies: '',
+    });
 
-const state = reactive({
-  ...initialState,
-})
+    const isNewProject = ref(true);
+    const dialog = ref(false);
 
-const rules = {
-  name: { required },
-  surname: { required },
-  email: { required, email },
-  password: { required },
-}
+    const rules = {
+      name: { required },
+      surname: { required },
+      email: { required, email },
+      password: { required, minLength: minLength(6) },
+    };
 
-const v$ = useVuelidate(rules, state)
+    const v$ = useVuelidate(rules, state);
 
-function clear () {
-  v$.value.$reset()
+    const submitForm = async () => {
+      v$.value.$validate();
+      if (!v$.value.$invalid) {
+        try {
+          // Slanje podataka na server
+          await axios.post('http://localhost:6969/register', {
+            ime: state.value.name,
+            prezime: state.value.surname,
+            email: state.value.email,
+            lozinka: state.value.password,
+          });
 
-  for (const [key, value] of Object.entries(initialState)) {
-    state[key] = value
-  }
-}
+          if (isNewProject.value) {
+            console.log("Naziv projekta:", state.value.projectName);
+            console.log("Opis projekta:", state.value.projectDescription);
+            console.log("Tehnologije:", state.value.projectTechnologies);
+          }
 
-const dialog = ref(false)
-const showPassword = ref(false) // vidljivost lozinke
+          // Dijalog za uspješan unos
+          dialog.value = true;
 
-async function submitForm() {
-  v$.value.$validate()
-  if (!v$.value.$invalid) {
-    try {
-      const response = await axios.post('http://localhost:6969/register', {
-        ime: state.name,
-        prezime: state.surname,
-        email: state.email,
-        lozinka: state.password,
-      }, { withCredentials: true })
+          // Očistiti podatke nakon uspješne prijave
+          state.value.name = '';
+          state.value.surname = '';
+          state.value.email = '';
+          state.value.password = '';
+          state.value.projectName = '';
+          state.value.projectDescription = '';
+          state.value.projectTechnologies = '';
 
-      if (response.status === 201) {
-        dialog.value = true
-      } else {
-        console.error('Registration error:', response.data.message)
-        alert('Registration failed: ' + response.data.message)
+          // Prikazati alert s porukom
+          alert("Uspješno poslano");
+
+        } catch (error) {
+          console.error(error);
+        }
       }
-    } catch (error) {
-      console.error('Registration error:', error)
-      alert('An error occurred during registration. Please try again.')
-    }
-  }
-}
+    };
 
+
+    return {state, isNewProject, dialog, v$, submitForm};
+  },
+};
 </script>
 
-<style scoped>
-.background-image {
-  background-image: url('https://cdn3.f-cdn.com/files/download/97941784/programmin.jpg?image-optimizer=force&format=webply&width=967');
+<style>
+.bg-gradient {
+  background: linear-gradient(to bottom, rgba(72, 76, 83, 0.8), rgba(57, 64, 62, 0.8)),
+  url('https://d19p4plxg0u3gz.cloudfront.net/f921919a-8f1d-11ec-9b71-0242ac120013/v/ba03ebd6-9d09-11eb-8a41-cedfb09875dd/1280x720-ba0555f2-9d09-11eb-b6b1-cedfb09875dd.webp?v=l1va8yk0');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 16px;
+  color: white;
 }
 
-.v-input--is-focused .v-input__control {
-  border-color: #1976D2;
-}
-
-.form-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  margin-bottom: 20px;
+.white--text {
+  color: white !important;
+  font-weight: bold !important;
+  font-style: italic;
 }
 </style>

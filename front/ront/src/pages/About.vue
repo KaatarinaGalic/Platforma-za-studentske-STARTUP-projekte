@@ -1,6 +1,6 @@
 <template>
   <v-container class="about">
-    <!-- About Us Tekst -->
+    <!-- O nama tekst -->
     <v-row>
       <v-col cols="12">
         <v-card
@@ -34,7 +34,7 @@
       </v-col>
     </v-row>
 
-    <!-- Our Team odjeljak -->
+    <!-- Mentori -->
 
     <v-row class="my-4">
       <v-col cols="12">
@@ -43,7 +43,7 @@
     </v-row>
 
     <v-row>
-      <!-- Kartica za Marko Marić -->
+      <!-- Marko Marić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -66,7 +66,7 @@
         </v-card>
       </v-col>
 
-      <!-- Kartica za Ana Kovačić -->
+      <!-- Ana Kovačić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -89,7 +89,7 @@
         </v-card>
       </v-col>
 
-      <!-- Kartica za Ivan Horvat -->
+      <!-- Ivan Horvat -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -114,7 +114,7 @@
     </v-row>
 
     <v-row>
-      <!-- Kartica za Marija Babić -->
+      <!-- Marija Babić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -137,7 +137,7 @@
         </v-card>
       </v-col>
 
-      <!-- Kartica za Ivana Šarić -->
+      <!-- Ivana Šarić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -160,7 +160,7 @@
         </v-card>
       </v-col>
 
-      <!-- Kartica za Luka Kovačić -->
+      <!-- Luka Kovačić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -185,7 +185,7 @@
     </v-row>
 
     <v-row>
-      <!-- Kartica za Lucija Novak -->
+      <!-- Lucija Novak -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -208,7 +208,7 @@
         </v-card>
       </v-col>
 
-      <!-- Kartica za Tomislav Jurić -->
+      <!-- Tomislav Jurić -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -231,7 +231,7 @@
         </v-card>
       </v-col>
 
-      <!-- Kartica za Jelena Marković -->
+      <!-- Jelena Marković -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -256,7 +256,7 @@
     </v-row>
 
     <v-row>
-      <!-- Kartica za Nikola Petrović -->
+      <!-- Nikola Petrović -->
       <v-col cols="12" sm="4">
         <v-card
           class="mx-auto d-flex flex-column align-center"
@@ -279,16 +279,14 @@
         </v-card>
       </v-col>
     </v-row>
-
   </v-container>
-
 </template>
-
 
 <style scoped>
 .white--text {
   color: white;
 }
+
 p {
   font-size: 1.3rem;
 }
@@ -301,6 +299,4 @@ p {
   font-size: 3rem;
   font-weight: bold;
 }
-
-
 </style>

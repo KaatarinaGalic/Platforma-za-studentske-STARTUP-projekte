@@ -1,6 +1,6 @@
 <template>
   <div class="faq-container">
-    <h2 class="faq-title">Frequently Asked Questions</h2><br><br>
+    <h2 class="faq-title">Često postavljana pitanja!</h2><br><br>
     <div
       v-for="(item, index) in faqs"
       :key="index"
@@ -25,17 +25,15 @@ export default {
     return {
       activeIndex: null,
       faqs: [
-        { question: 'What is SkillHubProjects?', answer: 'SkillHubProjects is a platform that connects users with various projects in the field of technology and education.' },
-        { question: 'How can I apply for a project?', answer: 'You can apply through the application form available on each project\'s page.' },
-        { question: 'What types of projects are available?', answer: 'We offer various projects in areas such as web development, mobile applications, research, education, and much more."' },
-        { question: 'How can I contact the SkillHubProjects team?', answer: 'To contact us, you can fill out the contact form available on our website or reach out via our social media channels' },
-        { question: 'How can I track the progress of a project?', answer: 'You can track project progress through our project management system, which allows you to view all phases and tasks of the project.' },
-        { question: 'Is SkillHubProjects free to use?', answer: 'Yes, SkillHubProjects is completely free for users. There are no hidden fees or charges.' },
-        { question: 'Can I collaborate with others on projects?', answer: 'Yes, SkillHubProjects encourages collaboration. You can team up with others to work on larger projects or share knowledge.' },
-        { question: 'Do I need prior experience to join a project?', answer: 'No, SkillHubProjects offers opportunities for both beginners and experienced professionals. You can filter projects based on your skill level.' },
-        { question: 'Are there any deadlines for project completion?', answer: 'Yes, each project has a set deadline. However, you will be able to view these deadlines before applying, so you can choose projects that fit your schedule.' },
-        { question: 'What happens after I complete a project?', answer: 'Upon successful completion of a project, you will receive recognition and feedback from the project owner. This can be used to enhance your portfolio or resume.' },
-
+        { question: 'Što je SummitVision?', answer: 'SummitVision je platforma koja okuplja studente iz različitih područja, omogućujući im rad na inovativnim projektima i ostvarenje profesionalnih i akademskih ciljeva.' },
+        { question: 'Kome je SummitVision namijenjen?', answer: 'SummitVision nudi prilike za sve studente, bez obzira na to jesu li iskusni ili tek započinju svoje putovanje. Prilagodit ćemo se vašim vještinama i ambicijama.' },
+        { question: 'Kako SummitVision podržava moj razvoj?', answer: 'SummitVision pruža resurse i podršku koji olakšavaju razvoj vaših ideja, uključujući povezivanje s mentorima i unapređivanje vašeg znanja.' },
+        { question: 'Može li SummitVision pomoći u ostvarivanju mojih ideja?', answer: 'Da, SummitVision je dizajniran kako bi vam pomogao da vaše ideje postanu stvarnost putem suradnje i resursa koji su vam na raspolaganju.' },
+        { question: 'Što čini SummitVision različitim od drugih platformi?', answer: 'SummitVision nije samo platforma, to je zajednica koja potiče rast, inovaciju i suradnju među studentima.' },
+        { question: 'Kako se mogu povezati s mentorom?', answer: 'Na SummitVision možete organizirati sastanak s mentorom po vašem izboru i raditi na svojim projektima uz njegovu podršku.' },
+        { question: 'Kako SummitVision doprinosi mom profesionalnom napretku?', answer: 'Na SummitVision možete razviti vještine, ostvariti akademske ciljeve i proširiti svoju mrežu kontakata, što vam pomaže u profesionalnom razvoju.' },
+        { question: 'Koje su prilike za suradnju na SummitVision platformi?', answer: 'SummitVision potiče suradnju između studenata i omogućava vam da radite na većim projektima, dijelite ideje i znanje s kolegama.' },
+        { question: 'Kako mogu postati dio SummitVision zajednice?', answer: 'Pridružite se SummitVision tako da se registrirate na našoj platformi i počnete raditi na projektima koji odgovaraju vašim interesima i vještinama.' }
       ]
     };
   },
@@ -48,17 +46,21 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Keania+One&display=swap');
 .faq-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color:rgba(255, 255, 255, 0.85);
+  background-color: rgb(180, 195, 218);
 
 }
 .faq-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #01bdd4;
+  font-family:'Keania One',sans-serif;
+  background: -webkit-linear-gradient(#125045,#008080);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 20px;
   text-align: left;
 }
@@ -68,7 +70,7 @@ export default {
   border: 1px solid #8450bc;
   border-radius: 8px;
   overflow: hidden;
-  background: linear-gradient(45deg, #01bdd4, #8450bc);
+  background: linear-gradient(45deg, #53b5c1, #8450bc);
 }
 
 .faq-question {
