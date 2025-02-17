@@ -190,7 +190,14 @@ export default {
           sessionStorage.setItem('isLoggedIn', true);
           this.isLoggedIn = true;
           this.loginDialog = false;
-          await this.fetchProjectsUsr();
+          // await this.fetchProjectsUsr();
+          // Provjeri ulogu korisnika
+          const userRole = response.data.role; // Pretpostavljamo da server vraća 'role' u odgovoru
+          if (userRole === 'admin') {
+            this.$router.push('/projects'); // Preusmjerenje na administratorsku stranicu
+          } else {
+            this.$router.push('/admin'); // Preusmjerenje na stranicu običnog korisnika
+          }
         }
       } catch (error) {
         console.error('Login error:', error);
