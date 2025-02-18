@@ -41,6 +41,7 @@ CREATE TABLE `korisnik` (
 
 INSERT INTO `korisnik` (`ID_korisnika`, `ime`, `prezime`, `email`, `lozinka`) VALUES
 (1000, 'Ivan', 'Horvat', 'ivan.horvat@gmail.com', 'ivan123lozinka'),
+(1111, 'Admin', 'Admin', 'admin@gmail.com', 'admin123'),
 (1256, 'Ana', 'Kosir', 'ana.kosir@gmail.com', 'ana123lozinka'),
 (1458, 'Marko', 'Mlikota', 'marko.mlikota@gmail.com', 'marko123lozinka'),
 (1485, 'Ivana', 'Novak', 'ivana.novak@gmailcom', 'ivana123lozinka'),

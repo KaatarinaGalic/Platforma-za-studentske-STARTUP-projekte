@@ -23,13 +23,13 @@
 
     <v-navigation-drawer app class="drawer"><br><br>
       <v-list>
-        <v-list-item title="Dashboard" prepend-icon="mdi-view-dashboard"></v-list-item>
-        <v-list-item title="Projects" prepend-icon="mdi-file-document"></v-list-item>
-        <v-list-item title="Report" prepend-icon="mdi-chart-bar"></v-list-item>
-        <v-list-item title="Institution" prepend-icon="mdi-office-building"></v-list-item>
-        <v-list-item title="Profile" prepend-icon="mdi-account"></v-list-item>
-        <v-list-item title="Settings" prepend-icon="mdi-cog"></v-list-item>
-        <v-list-item title="Logout" prepend-icon="mdi-logout"></v-list-item>
+        <v-list-item title="Dobro došli!" prepend-icon="mdi-view-dashboard"></v-list-item>
+        <v-list-item title="Korisnici" prepend-icon="mdi-account"></v-list-item>
+        <v-list-item title="Projekti" prepend-icon="mdi-file-document"></v-list-item>
+        <v-list-item title="Prijave" prepend-icon="mdi-chart-bar"></v-list-item>
+        <v-list-item title="Tehnologije" prepend-icon="mdi-office-building"></v-list-item>
+        <v-list-item title="Odjava" prepend-icon="mdi-logout" @click="logoutAndRedirect"></v-list-item>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -279,7 +279,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <!-- Edit User Project Modal -->
+      <!-- Uredi korisnika na projektu -->
       <v-dialog v-model="editUserDialog" max-width="500px">
         <v-card>
           <v-card-title>
@@ -289,7 +289,6 @@
             <v-form ref="editUserForm">
               <v-text-field v-model="selectedUser.email" label="Email"></v-text-field>
 
-              <!-- Project selection dropdown -->
               <!-- Dropdown za projekt -->
               <v-select
                 v-model="selectedProjectId"
@@ -307,6 +306,61 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <!-- Tablica za tehnologije -->
+      <v-card class="technologies-card">
+        <v-card-title>
+          Tehnologije
+          <v-spacer></v-spacer>
+          <v-btn color="green" @click="openAddTechnologyModal">
+            Dodaj novu tehnologiju
+          </v-btn>
+        </v-card-title>
+        <v-table class="custom-table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Naziv</th>
+            <th>Akcije</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="tech in technologies" :key="tech.ID_tehnologije">
+            <td>{{ tech.ID_tehnologije }}</td>
+            <td>{{ tech.naziv }}</td>
+            <td>
+              <v-btn class="btn-delete" color="red" @click="deleteTechnology(tech.ID_tehnologije)">
+                Obriši
+              </v-btn>
+            </td>
+          </tr>
+          </tbody>
+        </v-table>
+      </v-card>
+      <!-- Modal za dodavanje nove tehnologije -->
+      <v-dialog v-model="addTechnologyDialog" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="text-h5">Dodaj novu tehnologiju</span>
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="addTechForm">
+              <v-text-field
+                v-model="newTechnology.naziv"
+                label="Naziv tehnologije"
+              ></v-text-field>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="red" text @click="addTechnologyDialog = false">
+              Odustani
+            </v-btn>
+            <v-btn color="green" text @click="addTechnology">
+              Dodaj
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
 
 
 
@@ -342,6 +396,12 @@ export default {
       userEmail: '',
       selectedProjectId: null,
       editUserDialog: false,
+      technologies: [],
+      addTechnologyDialog: false,
+      newTechnology: {
+        naziv: ""
+      },
+
 
 
     };
@@ -534,7 +594,49 @@ export default {
       } catch (error) {
         console.error("Greška kod uklanjanja korisnika s projekta:", error);
       }
-    }
+    },
+    logoutAndRedirect() {
+      this.$router.push(' ');
+    },
+
+    async fetchTechnologies() {
+      try {
+        const response = await axios.get("http://localhost:6969/technologies");
+        this.technologies = response.data;
+      } catch (error) {
+        console.error("Greška kod dohvaćanja tehnologija:", error);
+      }
+    },
+
+    async deleteTechnology(techId) {
+      if (!confirm("Jeste li sigurni da želite obrisati ovu tehnologiju?")) return;
+      try {
+        await axios.delete(`http://localhost:6969/technologies/${techId}`);
+        this.fetchTechnologies(); // Osvježi listu nakon brisanja
+      } catch (error) {
+        console.error("Greška kod brisanja tehnologije:", error);
+      }
+    },
+    openAddTechnologyModal() {
+      this.addTechnologyDialog = true;
+    },
+    async addTechnology() {
+      try {
+        const response = await axios.post("http://localhost:6969/technologies", {
+          naziv: this.newTechnology.naziv
+        });
+        if (response.status === 201) {
+          alert("Tehnologija uspješno dodana!");
+          this.addTechnologyDialog = false;
+          this.newTechnology.naziv = "";
+          this.fetchTechnologies();
+        }
+      } catch (error) {
+        console.error("Greška kod dodavanja tehnologije:", error);
+        alert("Greška kod dodavanja tehnologije!");
+      }
+    },
+
 
 
 
@@ -547,6 +649,8 @@ export default {
     this.fetchUsers();
     this.fetchProjects();
     this.fetchRegistriraniKorisnici();
+    this.fetchTechnologies();
+
   },
   computed: {
     projectOptions() {
@@ -578,6 +682,7 @@ export default {
   margin-bottom: 80px;
 
 }
+
 
 .v-navigation-drawer {
   width: 250px;

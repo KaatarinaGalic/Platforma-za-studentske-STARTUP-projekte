@@ -369,6 +369,48 @@ con.connect(function (err) {
         });
     });
 
+    // Ruta za dohvaćanje svih tehnologija
+    app.get('/technologies', (req, res) => {
+        const sql = "SELECT ID_tehnologije, naziv FROM tehnologija";
+        con.query(sql, (err, results) => {
+            if (err) {
+                return res.status(500).send('Greška kod dohvaćanja tehnologija: ' + err);
+            }
+            res.json(results);
+        });
+    });
+
+// Ruta za brisanje tehnologije prema ID-ju
+    app.delete('/technologies/:id', (req, res) => {
+        const techId = req.params.id;
+        const sql = "DELETE FROM tehnologija WHERE ID_tehnologije = ?";
+        con.query(sql, [techId], (err, result) => {
+            if (err) {
+                return res.status(500).send('Greška kod brisanja tehnologije: ' + err);
+            }
+            res.status(200).send('Tehnologija uspješno obrisana');
+        });
+    });
+
+    // Ruta za dodavanje nove tehnologije
+    app.post('/technologies', (req, res) => {
+        const { naziv } = req.body;
+        if (!naziv) {
+            return res.status(400).send("Naziv tehnologije je obavezan");
+        }
+        const sql = "INSERT INTO tehnologija (naziv) VALUES (?)";
+        con.query(sql, [naziv], (err, result) => {
+            if (err) {
+                return res.status(500).send("Greška kod dodavanja tehnologije: " + err);
+            }
+            res.status(201).send("Tehnologija uspješno dodana");
+        });
+    });
+
+
+
+
+
 
 
     app.get("/registrirani_korisnici", (req, res) => {
