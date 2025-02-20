@@ -190,6 +190,9 @@ export default {
 </script>
 
 <style>
+.v-container {
+  max-width: 100% !important;
+}
 .bg-gradient {
   background: linear-gradient(to bottom, rgba(72, 76, 83, 0.8), rgba(57, 64, 62, 0.8)),
   url('https://d19p4plxg0u3gz.cloudfront.net/f921919a-8f1d-11ec-9b71-0242ac120013/v/ba03ebd6-9d09-11eb-8a41-cedfb09875dd/1280x720-ba0555f2-9d09-11eb-b6b1-cedfb09875dd.webp?v=l1va8yk0');
@@ -206,4 +209,5 @@ export default {
   font-weight: bold !important;
   font-style: italic;
 }
+
 </style>

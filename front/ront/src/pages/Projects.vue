@@ -318,7 +318,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
 @import url('https://fonts.googleapis.com/css2?family=Keania+One&display=swap');
 
 .naslov {
@@ -350,6 +350,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background:linear-gradient(90deg, #060e33 0%, #1d3168 100%);
 }
 
 .v-card-title {

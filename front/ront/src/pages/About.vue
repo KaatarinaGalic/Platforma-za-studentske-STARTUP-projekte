@@ -374,7 +374,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
+.v-container {
+  max-width: 100% !important;
+}
 .text-center {
   text-align: center;
 }
@@ -396,4 +399,9 @@ p {
   font-weight: bold;
   text-align: center;
 }
+.v-card{
+  background: linear-gradient(90deg, #060e33 0%, #1d3168 100%);
+
+}
+
 </style>

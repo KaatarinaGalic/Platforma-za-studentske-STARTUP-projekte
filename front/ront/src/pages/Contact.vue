@@ -314,7 +314,10 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style >
+.v-container {
+  max-width: 100% !important;
+}
 /* Pozadinska slika */
 .contact-form {
   font-family: Arial, sans-serif;
@@ -328,6 +331,7 @@ export default {
   .text-center {
     text-align: center;
   }
+
 
   .content {
     margin-top: 40px;

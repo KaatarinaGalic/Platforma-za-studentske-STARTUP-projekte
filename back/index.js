@@ -100,6 +100,7 @@ con.connect(function (err) {
       projekt_tehnologija pt ON p.ID_projekta = pt.ID_projekta
     LEFT JOIN 
       tehnologija t ON pt.ID_tehnologije = t.ID_tehnologije
+    WHERE p.slika_url LIKE 'http%'  -- samo odobreni projekti
     GROUP BY 
       p.ID_projekta, p.slika_url, p.naziv;
   `;
@@ -110,6 +111,7 @@ con.connect(function (err) {
             res.status(200).json(result);
         });
     });
+
 
     app.get("/projekti_korisnik", authenticateSession, function (req, res) {
         const userId = req.session.user.ID_korisnika;
