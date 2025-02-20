@@ -46,7 +46,8 @@ con.connect(function (err) {
             // Dodavanje role - ako je email admina, onda je 'admin', inače 'user'
             const role = (email === 'admin@gmail.com') ? 'admin' : 'user';
 
-            req.session.user = { id: user.id, email: user.email, role }; // Spremanje uloge u sesiju
+            req.session.user = { ID_korisnika: user.ID_korisnika, email: user.email, role };
+            // Spremanje uloge u sesiju
             res.json({ message: 'Login successful', role }); // Slanje uloge frontendu
         });
     });
@@ -63,9 +64,9 @@ con.connect(function (err) {
     };
     app.post('/add-to-project', (req, res) => {
         const { projectId } = req.body;
-        const userId = req.session.user.ID_korisnika; // Adjust based on your session user model
-        console.log(projectId);
+        const userId = req.session.user && req.session.user.ID_korisnika;
         if (!userId) return res.status(401).send('User not logged in');
+
 
         const sql = "INSERT INTO prijava (ID_korisnika, ID_projekta) VALUES (?, ?)";
         const values = [userId, projectId];
@@ -75,6 +76,7 @@ con.connect(function (err) {
             res.status(200).send('User added to project successfully');
         });
     });
+
     app.delete('/remove-from-project', authenticateSession, (req, res) => {
         const { projectId } = req.body;
         const userId = req.session.user.ID_korisnika;
