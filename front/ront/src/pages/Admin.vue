@@ -93,8 +93,8 @@
               <td>{{ user.ime }}</td>
               <td>{{ user.prezime }}</td>
               <td>{{ user.email }}</td>
-              <td>
-                <v-btn class="btn-edit" color="blue" @click="openEditUserModal(user)">Uredi</v-btn>
+              <td class="action-buttons">
+                <v-btn class="btn-edit" color="blue"  @click="openEditUserModal(user)">Uredi</v-btn>
                 <v-btn class="btn-delete" color="red" @click="deleteUser(user.ID_korisnika)">Obriši</v-btn>
               </td>
             </tr>

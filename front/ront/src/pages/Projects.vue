@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <h1 class="text-center my-4 naslov">Zakorači u svijet inovativnih studentskih projekata</h1>
 
     <!-- Log In/Log Out Button -->
@@ -149,7 +149,7 @@
         class="my-4"
       ></v-pagination>
     </v-container>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -246,7 +246,7 @@ export default {
         });
         if (response.status === 200) {
           alert('Successfully deregistered from the project!');
-          await this.fetchProjectsUsr(); // Reload projects to update registration status
+          await this.fetchProjectsUsr();
         }
       } catch (error) {
         console.error('Deregistration error:', error);
@@ -289,7 +289,7 @@ export default {
         .catch(error => console.error('Error fetching data:', error));
     },
     isRegistered(projectId) {
-      // Check if the current user is registered for the project
+
       return this.projects.some(project => project.ID_projekta === projectId && project.isRegistered);
     }
   },
@@ -318,9 +318,13 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Keania+One&display=swap');
 
+.v-container {
+  max-width: 100% !important;
+
+}
 .naslov {
   background: -webkit-linear-gradient(#e8edef, #4ad88c);
   -webkit-background-clip: text;
@@ -362,8 +366,4 @@ export default {
   text-align: center;
 }
 
-.v-container {
-  max-width: 100% !important;
-
-}
 </style>

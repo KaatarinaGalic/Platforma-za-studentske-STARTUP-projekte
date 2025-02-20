@@ -6,7 +6,7 @@
     </video>
     <div class="overlay-content">
       <h1 class="hero-title">
-        VAŠA VIZIJA, NAŠ PRIORITET - DOBRO DOŠLI NA SummitVision!</h1>
+        VAŠA VIZIJA, NAŠ PRIORITET  DOBRO DOŠLI NA SummitVision!</h1>
       <p class="hero-description">
         Studentska platforma za inovativne startup projekte.
         Otkrij svoj potencijal, poveži se sa studentima i stvaraj budućnost!
