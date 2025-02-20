@@ -10,10 +10,10 @@
           flat
           style="background-color: transparent;"
         >
-          <v-card-text class="text-center" style="background-color: transparent;">
+          <v-card-text class="text-center" style="background-color: transparent;" >
             <v-row>
               <v-col>
-                <h1 class="display-1 gradient-text">Dobrodošli na SummitVision</h1>
+                <h1 class="display-1 gradient-text">DOBRODOŠLI NA SUMMITVISION</h1>
               </v-col>
             </v-row>
 
@@ -375,6 +375,7 @@ export default {
 </script>
 
 <style >
+@import url('https://fonts.googleapis.com/css2?family=Keania+One&display=swap');
 .v-container {
   max-width: 100% !important;
 }
@@ -391,7 +392,7 @@ p {
 }
 
 .gradient-text {
-  font-family:'Keania One', sans-serif;
+  font-family:'Keania One', sans-serif !important;
   background: -webkit-linear-gradient(#00ffcc, #008080);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

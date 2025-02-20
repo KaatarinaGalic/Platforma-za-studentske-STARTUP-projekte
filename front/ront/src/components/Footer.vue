@@ -113,7 +113,11 @@ function closeTermsDialog() {
 }
 </script>
 
-<style scoped>
+<style >
+.v-btn {
+  font-style: italic;
+}
+
 .full-width-footer {
   background-color: #0d0d0d;
   width: 100%;
