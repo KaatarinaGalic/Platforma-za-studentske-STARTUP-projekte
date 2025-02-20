@@ -129,13 +129,16 @@ export default {
       name: { required },
       surname: { required },
       email: { required, email },
-      password: { required, minLength: minLength(6) },
+      password: { required, minLength: minLength(3) },
     };
 
     const v$ = useVuelidate(rules, state);
 
     const submitForm = async () => {
       v$.value.$validate();
+      console.log('Sending data:', state.value.projectName, state.value.email);
+
+      console.log(v$.value.$invalid); // dodala
       if (!v$.value.$invalid) {
         try {
           // Slanje podataka na server
@@ -146,14 +149,19 @@ export default {
             lozinka: state.value.password,
           });
 
+          // Ako je odabran novi projekt, pošalji podatke na rutu za dodavanje projekta
+          // Ako je odabran novi projekt, pošalji zahtjev na ispravan endpoint
           if (isNewProject.value) {
-            console.log("Naziv projekta:", state.value.projectName);
-            console.log("Opis projekta:", state.value.projectDescription);
-            console.log("Tehnologije:", state.value.projectTechnologies);
+            await axios.post('http://localhost:6969/api/projects/register', {
+              name: state.value.projectName,
+              description: state.value.projectDescription,
+              // Za owner_id možeš koristiti, primjerice, email korisnika (ako nemaš drugu identifikaciju)
+              owner_id: state.value.email
+            });
           }
-
           // Dijalog za uspješan unos
           dialog.value = true;
+          alert("Uspješno poslano!");
 
           // Očistiti podatke nakon uspješne prijave
           state.value.name = '';
@@ -174,9 +182,12 @@ export default {
     };
 
 
+
     return {state, isNewProject, dialog, v$, submitForm};
   },
+
 };
+
 </script>
 
 <style>

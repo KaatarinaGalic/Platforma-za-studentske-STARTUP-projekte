@@ -35,20 +35,25 @@ con.connect(function (err) {
     app.post('/login', function (req, res) {
         const { email, password } = req.body;
         const sql = "SELECT * FROM korisnik WHERE email = ?";
+
         con.query(sql, [email], function (err, results) {
-            if (err) return res.status(500).send('Server Error');
-            if (results.length === 0) return res.status(401).send('Invalid credentials');
+            if (err) return res.status(500).json({ message: 'Server Error' });
+            if (results.length === 0) return res.status(401).json({ message: 'Invalid credentials' });
 
             const user = results[0];
-            if (user.lozinka !== password) return res.status(401).send('Invalid credentials');
+            if (user.lozinka !== password) return res.status(401).json({ message: 'Invalid credentials' });
 
-            req.session.user = user; // Store user info in session
-            res.json({ message: 'Login successful' });
+            // Dodavanje role - ako je email admina, onda je 'admin', inače 'user'
+            const role = (email === 'admin@gmail.com') ? 'admin' : 'user';
+
+            req.session.user = { id: user.id, email: user.email, role }; // Spremanje uloge u sesiju
+            res.json({ message: 'Login successful', role }); // Slanje uloge frontendu
         });
     });
+
     app.post('/logout', function (req, res) {
         req.session.destroy((err) => {
-            if (err) return res.status(500).send('Error logging out');
+            if (err) return res.status(500).json({ message: 'Error logging out' });
             res.json({ message: 'Logout successful' });
         });
     });
@@ -82,27 +87,30 @@ con.connect(function (err) {
             res.status(200).send('User removed from project successfully');
         });
     });
-    app.get("/projekti",function (req,res){
-        const sql="SELECT \n" +
-            "    p.ID_projekta AS ID_projekta,\n" +
-            "    p.slika_url AS slika_url,\n" +
-            "    p.naziv AS naziv,\n" +
-            "    GROUP_CONCAT(t.naziv ORDER BY t.naziv ASC SEPARATOR ', ') AS tehnologije\n" +
-            "FROM \n" +
-            "    projekt p\n" +
-            "JOIN \n" +
-            "    projekt_tehnologija pt ON p.ID_projekta = pt.ID_projekta\n" +
-            "JOIN \n" +
-            "    tehnologija t ON pt.ID_tehnologije = t.ID_tehnologije\n" +
-            "GROUP BY \n" +
-            "    p.ID_projekta, p.slika_url, p.naziv;\n"
+    app.get("/projekti", function (req, res) {
+        const sql = `
+    SELECT 
+      p.ID_projekta AS ID_projekta,
+      p.slika_url AS slika_url,
+      p.naziv AS naziv,
+      IFNULL(GROUP_CONCAT(t.naziv ORDER BY t.naziv ASC SEPARATOR ', '), '') AS tehnologije
+    FROM 
+      projekt p
+    LEFT JOIN 
+      projekt_tehnologija pt ON p.ID_projekta = pt.ID_projekta
+    LEFT JOIN 
+      tehnologija t ON pt.ID_tehnologije = t.ID_tehnologije
+    GROUP BY 
+      p.ID_projekta, p.slika_url, p.naziv;
+  `;
         con.query(sql, function (err, result) {
             if (err) {
                 return res.status(500).send('Greška!' + err);
             }
-            res.status(201).json(result);
+            res.status(200).json(result);
         });
     });
+
     app.get("/projekti_korisnik", authenticateSession, function (req, res) {
         const userId = req.session.user.ID_korisnika;
         const sql = "SELECT \n" +
@@ -213,7 +221,102 @@ con.connect(function (err) {
             res.status(200).send("Projekt uspješno ažuriran");
         });
     });
+    //Ruta za spremanje zahtjeva za novi projekt
+    app.post('/api/projects/register', (req, res) => {
+        // Očekujemo da klijent pošalje: name, description i owner_id
+        const { name, description } = req.body;
+        console.log('Received data:', req.body);
+        // Umjesto da se opis koristi za sliku, on se zapravo sprema u stupac 'slika_url'
+        // Za nove projekte, opis neće biti valjani URL
+        const query = "INSERT INTO projekt (naziv, slika_url) VALUES (?, ?)";
+        con.query(query, [name, description], (err, result) => {
+            if (err) {
+                console.error('Greška pri dodavanju projekta:', err);
+                return res.status(500).send('Greška pri dodavanju projekta');
+            }
+            res.status(201).send('Projekt poslan na odobrenje');
+        });
+    });
 
+    app.get('/api/projects/pending', (req, res) => {
+        // Dohvati sve projekte gdje stupac slika_url NE počinje s "http"
+        // (pod pretpostavkom da postojeći projekti imaju URL slike, a novi projekt unesen s registracije nemaju)
+        const query = "SELECT * FROM projekt WHERE slika_url NOT LIKE 'http%'";
+        con.query(query, (err, results) => {
+            if (err) {
+                console.error('Greška pri dohvaćanju projekata:', err);
+                return res.status(500).send('Greška pri dohvaćanju projekata');
+            }
+            res.status(200).json(results);
+        });
+    });
+
+    app.put('/api/projects/update-status', (req, res) => {
+        const { projectId, newStatus } = req.body;
+        const query = `UPDATE projekt SET status = ? WHERE ID_projekta = ?`;
+        con.query(query, [newStatus, projectId], (err, result) => {
+            if (err) {
+                console.error('Greška pri ažuriranju statusa:', err);
+                return res.status(500).send('Greška pri ažuriranju statusa');
+            }
+            res.status(200).send('Status projekta ažuriran');
+        });
+    });
+    app.get('/api/projects/last-submitter', (req, res) => {
+        const query = "SELECT email FROM korisnik ORDER BY ID_korisnika DESC LIMIT 1";
+
+        con.query(query, (err, results) => {
+            if (err) {
+                console.error('Greška pri dohvaćanju posljednjeg korisnika:', err);
+                return res.status(500).send('Greška pri dohvaćanju korisnika');
+            }
+
+            if (results.length > 0) {
+                res.status(200).json({ lastSubmitterEmail: results[0].email });
+            } else {
+                res.status(404).send('Nema korisnika');
+            }
+        });
+    });
+    app.post('/api/projects/reject/:id', (req, res) => {
+        const projectId = req.params.id;
+        const query = "DELETE FROM projekt WHERE ID_projekta = ?";
+        con.query(query, [projectId], (err, result) => {
+            if (err) {
+                console.error('Greška pri brisanju projekta:', err);
+                return res.status(500).send('Greška pri brisanju projekta');
+            }
+            if (result.affectedRows > 0) {
+                console.log(`Projekt s ID ${projectId} je obrisan.`);
+                res.status(200).send('Projekt uspješno obrisan');
+            } else {
+                res.status(404).send('Projekt nije pronađen');
+            }
+        });
+    });
+    app.post('/api/projects/approve/:id', (req, res) => {
+        const projectId = req.params.id;
+        // Ovdje postavljamo default URL – on može biti placeholder koji kasnije admin mijenja.
+        const approvedUrl = "http://example.com/approved-placeholder.jpg";
+
+        const query = "UPDATE projekt SET slika_url = ? WHERE ID_projekta = ? AND slika_url NOT LIKE 'http%'";
+        con.query(query, [approvedUrl, projectId], (err, result) => {
+            if (err) {
+                console.error("Greška pri odobravanju projekta:", err);
+                return res.status(500).send("Greška pri odobravanju projekta");
+            }
+            if(result.affectedRows > 0) {
+                res.status(200).send("Projekt odobren");
+            } else {
+                res.status(404).send("Projekt nije pronađen ili je već odobren");
+            }
+        });
+    });
+
+
+
+
+    //Kraj rute
     app.delete("/projekti/:id", function (req, res) {
         const projectId = req.params.id;
 
@@ -235,6 +338,8 @@ con.connect(function (err) {
             });
         });
     });
+
+
 
 
 

@@ -109,9 +109,9 @@
           ></v-img>
 
 
-        <v-card-title>{{ card.naziv }}</v-card-title>
+          <v-card-title>{{ card.naziv }}</v-card-title>
 
-        <v-card-subtitle>{{ card.tehnologije }}</v-card-subtitle>
+          <v-card-subtitle>{{ card.tehnologije }}</v-card-subtitle>
 
           <v-card-actions>
             <v-btn @click="handleRegister(card.ID_projekta)" :disabled="isRegistered(card.ID_projekta)">
@@ -122,19 +122,19 @@
             </v-btn>
           </v-card-actions>
 
-        <v-dialog v-model="card.dialog" max-width="500">
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ card.title }}</span>
-            </v-card-title>
-            <v-card-text>
-              {{ card.description }}
-            </v-card-text>
-            <v-card-actions>
-              <v-btn color="blue" text @click="card.dialog = false">Close</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+          <v-dialog v-model="card.dialog" max-width="500">
+            <v-card>
+              <v-card-title>
+                <span class="headline">{{ card.title }}</span>
+              </v-card-title>
+              <v-card-text>
+                {{ card.description }}
+              </v-card-text>
+              <v-card-actions>
+                <v-btn color="blue" text @click="card.dialog = false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-responsive>
       </v-card>
 
@@ -154,8 +154,9 @@
 
 <script>
 import axios from 'axios';
-import { onMounted, ref, computed } from 'vue';
+import {onMounted, ref, computed} from 'vue';
 import {grey} from "vuetify/util/colors";
+
 export default {
   data() {
     return {
@@ -184,13 +185,20 @@ export default {
         const response = await axios.post('http://localhost:6969/login', {
           email: this.email,
           password: this.currentPassword
-        }, { withCredentials: true });
+        }, {withCredentials: true});
 
         if (response.data.message === 'Login successful') {
           sessionStorage.setItem('isLoggedIn', true);
           this.isLoggedIn = true;
           this.loginDialog = false;
-          await this.fetchProjectsUsr();
+          // await this.fetchProjectsUsr();
+          // Provjeri ulogu korisnika
+          const userRole = response.data.role; // Pretpostavljamo da server vraća 'role' u odgovoru
+          if (userRole === 'admin') {
+            this.$router.push('/admin'); // Preusmjerenje na administratorsku stranicu
+          } else {
+            this.$router.push('/projects'); // Preusmjerenje na stranicu običnog korisnika
+          }
         }
       } catch (error) {
         console.error('Login error:', error);
@@ -199,7 +207,7 @@ export default {
     },
     async handleLogout() {
       try {
-        await axios.post('http://localhost:6969/logout', {}, { withCredentials: true });
+        await axios.post('http://localhost:6969/logout', {}, {withCredentials: true});
         sessionStorage.removeItem('isLoggedIn');
         this.isLoggedIn = false;
       } catch (error) {
@@ -214,7 +222,7 @@ export default {
       console.log('Register button clicked with projectId:', projectId);
 
       try {
-        const response = await axios.post('http://localhost:6969/add-to-project', {projectId}, { withCredentials: true });
+        const response = await axios.post('http://localhost:6969/add-to-project', {projectId}, {withCredentials: true});
         await this.fetchProjectsUsr();
         if (response.status === 200) {
           alert('Successfully registered for the project!');
@@ -232,7 +240,10 @@ export default {
       console.log('Deregister button clicked with projectId:', projectId);
 
       try {
-        const response = await axios.delete('http://localhost:6969/remove-from-project', {data:{projectId},withCredentials: true});
+        const response = await axios.delete('http://localhost:6969/remove-from-project', {
+          data: {projectId},
+          withCredentials: true
+        });
         if (response.status === 200) {
           alert('Successfully deregistered from the project!');
           await this.fetchProjectsUsr(); // Reload projects to update registration status
@@ -251,7 +262,7 @@ export default {
         const response = await axios.patch('http://localhost:6969/change-password', {
           currentPassword: this.currentPassword,
           newPassword: this.newPassword,
-        }, { withCredentials: true });
+        }, {withCredentials: true});
         console.log(this.currentPassword, this.newPassword);
         if (response.status === 200) {
           alert('Password changed successfully');
@@ -270,7 +281,7 @@ export default {
         .catch(error => console.error('Error fetching data:', error));
     },
     fetchProjectsUsr() {
-      axios.get('http://localhost:6969/projekti_korisnik', { withCredentials: true })
+      axios.get('http://localhost:6969/projekti_korisnik', {withCredentials: true})
         .then(response => {
           console.log(response.data);
           this.projects = response.data;
@@ -309,7 +320,8 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Keania+One&display=swap');
-.naslov{
+
+.naslov {
   background: -webkit-linear-gradient(#e8edef, #4ad88c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -317,6 +329,7 @@ export default {
   font-family: 'Keania One', cursive;
 
 }
+
 .login-dialog .v-card {
   background-image: url('https://image.dnevnik.hr/media/images/1920x1080/Jan2019/61625743-mlijecna-staza.jpg'); /* Zamenite 'your-image-url.jpg' sa URL-om vaše slike */
   background-size: cover;
@@ -324,6 +337,7 @@ export default {
   background-repeat: no-repeat;
   color: white;
 }
+
 .headline {
   font-size: 20px;
   font-weight: bold;
@@ -346,6 +360,7 @@ export default {
 .v-card-subtitle {
   text-align: center;
 }
+
 .v-container {
   max-width: 100% !important;
 

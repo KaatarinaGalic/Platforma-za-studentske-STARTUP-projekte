@@ -360,6 +360,33 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <!--Projekti na čekanju-->
+      <v-card>
+        <v-card-title>Projekti na čekanju</v-card-title>
+        <v-card-text>
+          <v-table>
+            <thead>
+            <tr>
+              <th>Naziv</th>
+              <th>Opis</th>
+              <th>Podnositelj</th>
+              <th>Akcije</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="project in pendingProjects" :key="project.id">
+              <td>{{ project.naziv }}</td>
+              <td>{{ project.slika_url }}</td>
+              <td>{{ lastSubmitterEmail}}</td>
+              <td>
+                <v-btn color="green" @click="approveProject(project.ID_projekta)">Odobri</v-btn>
+                <v-btn color="red" @click="rejectProject(project.ID_projekta)">Odbij</v-btn>
+              </td>
+            </tr>
+            </tbody>
+          </v-table>
+        </v-card-text>
+      </v-card>
 
 
 
@@ -401,6 +428,8 @@ export default {
       newTechnology: {
         naziv: ""
       },
+      pendingProjects: [],
+      lastSubmitterEmail: '',
 
 
 
@@ -636,6 +665,47 @@ export default {
         alert("Greška kod dodavanja tehnologije!");
       }
     },
+    //Za Zahtjev
+    async fetchPendingProjects() {
+      try {
+        const response = await fetch("http://localhost:6969/api/projects/pending");
+        this.pendingProjects = await response.json();
+      } catch (error) {
+        console.error("Error fetching pending projects:", error);
+      }
+    },
+
+    async approveProject(projectId) {
+      try {
+        await axios.post(`http://localhost:6969/api/projects/approve/${projectId}`);
+        alert("Projekt odobren!");
+        this.fetchPendingProjects();
+      } catch (error) {
+        console.error("Error approving project:", error);
+        alert("Došlo je do greške prilikom odobravanja projekta.");
+      }
+    },
+
+
+    async rejectProject(projectId) {
+      console.log('Rejecting project with ID:', projectId);
+      try {
+        await axios.post(`http://localhost:6969/api/projects/reject/${projectId}`);
+        this.fetchPendingProjects();
+      } catch (error) {
+        console.error("Error rejecting project:", error);
+      }
+    },
+
+    async getLastSubmitterEmail() {
+      try {
+        const response = await axios.get('http://localhost:6969/api/projects/last-submitter');
+        this.lastSubmitterEmail = response.data.lastSubmitterEmail;
+      } catch (error) {
+        console.error('Greška pri dohvaćanju emaila podnositelja:', error);
+      }
+    },
+
 
 
 
@@ -650,6 +720,8 @@ export default {
     this.fetchProjects();
     this.fetchRegistriraniKorisnici();
     this.fetchTechnologies();
+    this.fetchPendingProjects();
+    this.getLastSubmitterEmail();
 
   },
   computed: {
