@@ -138,7 +138,7 @@ export default {
       v$.value.$validate();
       console.log('Sending data:', state.value.projectName, state.value.email);
 
-      console.log(v$.value.$invalid); // dodala
+      console.log(v$.value.$invalid);
       if (!v$.value.$invalid) {
         try {
           // Slanje podataka na server
@@ -150,18 +150,17 @@ export default {
           });
 
           // Ako je odabran novi projekt, pošalji podatke na rutu za dodavanje projekta
-          // Ako je odabran novi projekt, pošalji zahtjev na ispravan endpoint
+
           if (isNewProject.value) {
             await axios.post('http://localhost:6969/api/projects/register', {
               name: state.value.projectName,
               description: state.value.projectDescription,
-              // Za owner_id možeš koristiti, primjerice, email korisnika (ako nemaš drugu identifikaciju)
               owner_id: state.value.email
             });
           }
           // Dijalog za uspješan unos
           dialog.value = true;
-          alert("Uspješno poslano!");
+
 
           // Očistiti podatke nakon uspješne prijave
           state.value.name = '';
@@ -172,7 +171,7 @@ export default {
           state.value.projectDescription = '';
           state.value.projectTechnologies = '';
 
-          // Prikazati alert s porukom
+
           alert("Uspješno poslano");
 
         } catch (error) {

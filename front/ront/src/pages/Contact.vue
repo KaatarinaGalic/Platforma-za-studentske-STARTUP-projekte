@@ -103,13 +103,13 @@
                 required
               ></v-text-field>
 
-              <!-- Radio Group for Mentor Option -->
+              <!-- Mentor Opcija -->
               <v-radio-group v-model="form.mentorStatus" row>
                 <v-radio label="Mentor" value="mentor"></v-radio>
                 <v-radio label="Bez mentora" value="noMentor"></v-radio>
               </v-radio-group>
 
-              <!-- Select for Mentor -->
+              <!-- Odabir Mentora -->
               <v-select
                 v-if="form.mentorStatus === 'mentor'"
                 v-model="form.selectedMentor"
@@ -128,7 +128,7 @@
                 @update:modelValue="loadAvailableTimes"
               ></v-date-picker>
 
-              <!-- Prikaz odabranog datuma -->
+
               <v-row v-if="form.selectedDate">
                 <v-col>
                   <p><strong>Odabrani datum: </strong>{{ formatDate(form.selectedDate) }}</p>
@@ -175,10 +175,10 @@ export default {
         email: '',
         message: '',
         mentorStatus: '',
-        selectedMentor: '', // Za pohranu odabranog mentora
-        selectedDate: null, // Za pohranu odabranog datuma
-        selectedTime: '', // Za pohranu odabrane satnice
-        availableTimes: [] // Za pohranu slobodnih satnica
+        selectedMentor: '',
+        selectedDate: null,
+        selectedTime: '',
+        availableTimes: []
       },
       alert: {
         visible: false,
@@ -199,15 +199,59 @@ export default {
       ],
       mentorAvailability: {
         'Marko Marić': {
-          '2025-01-30': ['09:00', '14:00', '16:00'],
-          '2025-02-01': ['10:00', '12:00', '15:00'],
-          '2025-02-07': ['10:00', '12:00', '15:00'],
+          '2025-02-25': ['09:00', '14:00', '16:00'],
+          '2025-02-26': ['10:00', '12:00', '15:00'],
+          '2025-02-27': ['10:00', '12:00', '15:00'],
+          '2025-02-28': ['09:00', '14:00', '16:00'],
+          '2025-03-10': ['09:00', '14:00', '16:00']
         },
         'Ana Kovačić': {
-          '2025-01-30': ['08:00', '13:00', '17:00'],
-          '2025-02-01': ['09:00', '11:00', '14:00']
+          '2025-02-28': ['08:00', '13:00', '17:00'],
+          '2025-02-27': ['09:00', '11:00', '14:00'],
+          '2025-03-26': ['09:00', '12:00', '14:00']
+
         },
-        // Dodajite druge mentore i njihove dostupne satnice...
+        'Ivan Horvat': {
+          '2025-02-26': ['08:00', '10:00', '12:00'],
+          '2025-03-05': ['09:00', '13:00', '15:00'],
+          '2025-03-26': ['09:00', '12:00', '14:00']
+
+        },
+        'Marija Babić': {
+          '2025-02-26': ['09:00', '12:00', '14:00'],
+          '2025-03-06': ['10:00', '13:00', '16:00']
+        },
+        'Ivana Šarić': {
+          '2025-02-27': ['08:00', '10:00', '14:00'],
+          '2025-03-08': ['09:00', '11:00', '15:00']
+        },
+        'Luka Kovačić': {
+          '2025-02-28': ['08:00', '11:00', '14:00'],
+          '2025-03-12': ['09:00', '13:00', '16:00']
+        },
+        'Lucija Novak': {
+          '2025-02-25': ['09:00', '11:00', '14:00'],
+          '2025-02-28': ['10:00', '13:00', '15:00'],
+          '2025-03-06': ['09:00', '12:00', '14:00']
+
+        },
+        'Tomislav Jurić': {
+          '2025-02-27': ['08:00', '11:00', '14:00'],
+          '2025-03-20': ['09:00', '13:00', '16:00']
+        },
+        'Jelena Marković': {
+          '2025-02-27': ['08:00', '10:00', '12:00'],
+          '2025-02-28': ['09:00', '11:00', '13:00'],
+          '2025-03-01': ['09:00', '12:00', '14:00']
+
+        },
+        'Nikola Petrović': {
+          '2025-02-25': ['08:00', '10:00', '12:00'],
+          '2025-02-26': ['09:00', '12:00', '14:00'],
+          '2025-03-16': ['09:00', '12:00', '14:00']
+
+        }
+
       }
     }
   },

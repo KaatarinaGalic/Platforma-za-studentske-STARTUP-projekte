@@ -317,7 +317,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 1; /* Video je u pozadini */
+  z-index: 1; /*video u pozadini*/
 }
 
 .overlay-content {
@@ -327,7 +327,7 @@ onMounted(() => {
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
-  z-index: 2; /* Overlay sadržaj je iznad videa */
+  z-index: 2; /* sadrzaj iznad videa*/
   padding: 1rem;
 }
 

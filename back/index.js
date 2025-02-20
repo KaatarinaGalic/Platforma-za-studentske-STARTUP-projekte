@@ -177,7 +177,6 @@ con.connect(function (err) {
         const { id } = req.params;
         const { ime, prezime, email } = req.body;
 
-        // Koristi tablicu "korisnik" (kao u ostalim rutama)
         const query = "UPDATE korisnik SET ime = ?, prezime = ?, email = ? WHERE ID_korisnika = ?";
 
         con.query(query, [ime, prezime, email, id], (err, result) => {
@@ -223,10 +222,10 @@ con.connect(function (err) {
     });
     //Ruta za spremanje zahtjeva za novi projekt
     app.post('/api/projects/register', (req, res) => {
-        // Očekujemo da klijent pošalje: name, description i owner_id
+
         const { name, description } = req.body;
         console.log('Received data:', req.body);
-        // Umjesto da se opis koristi za sliku, on se zapravo sprema u stupac 'slika_url'
+
         // Za nove projekte, opis neće biti valjani URL
         const query = "INSERT INTO projekt (naziv, slika_url) VALUES (?, ?)";
         con.query(query, [name, description], (err, result) => {
@@ -240,7 +239,6 @@ con.connect(function (err) {
 
     app.get('/api/projects/pending', (req, res) => {
         // Dohvati sve projekte gdje stupac slika_url NE počinje s "http"
-        // (pod pretpostavkom da postojeći projekti imaju URL slike, a novi projekt unesen s registracije nemaju)
         const query = "SELECT * FROM projekt WHERE slika_url NOT LIKE 'http%'";
         con.query(query, (err, results) => {
             if (err) {
@@ -278,6 +276,7 @@ con.connect(function (err) {
             }
         });
     });
+    //Ruta za odbijanje projekata na cekanju
     app.post('/api/projects/reject/:id', (req, res) => {
         const projectId = req.params.id;
         const query = "DELETE FROM projekt WHERE ID_projekta = ?";
@@ -294,6 +293,7 @@ con.connect(function (err) {
             }
         });
     });
+    //ruta za odobravanje projekta na cekanju
     app.post('/api/projects/approve/:id', (req, res) => {
         const projectId = req.params.id;
         // Ovdje postavljamo default URL – on može biti placeholder koji kasnije admin mijenja.
@@ -340,12 +340,8 @@ con.connect(function (err) {
     });
 
 
-
-
-
     app.post("/projects", (req, res) => {
         const { naziv, tehnologije, slika_url } = req.body;
-        // Prvo umetni projekt u tablicu "projekt"
         const sqlInsertProject = "INSERT INTO projekt (naziv, slika_url) VALUES (?, ?)";
         con.query(sqlInsertProject, [naziv, slika_url], (err, result) => {
             if (err) {
@@ -353,9 +349,8 @@ con.connect(function (err) {
                 return res.status(500).send({ message: "Greška kod dodavanja projekta" });
             }
             const projectId = result.insertId;
-            // Ako su unesene tehnologije, obradi ih
             if (tehnologije) {
-                // Pretpostavljamo da su unesene kao zarezom odvojeni string
+
                 const techArray = tehnologije.split(',').map(tech => tech.trim());
                 if (techArray.length === 0) {
                     return res.status(201).send({ message: "Projekt dodan!" });
@@ -367,7 +362,7 @@ con.connect(function (err) {
                     con.query(sqlFindTech, [techName], (err, techResult) => {
                         if (err) {
                             console.error(err);
-                            queriesCompleted++; // Preskoči ako dođe do greške
+                            queriesCompleted++;
                             if (queriesCompleted === techArray.length) {
                                 res.status(201).send({ message: "Projekt dodan, ali s greškama u unosu tehnologija" });
                             }
@@ -385,7 +380,6 @@ con.connect(function (err) {
                                     }
                                 });
                             } else {
-                                // Ako tehnologija ne postoji, možeš odlučiti je li potrebno umetnuti je ili preskočiti
                                 queriesCompleted++;
                                 if (queriesCompleted === techArray.length) {
                                     res.status(201).send({ message: "Projekt dodan, ali neka tehnologija nije pronađena" });
@@ -444,7 +438,6 @@ con.connect(function (err) {
             res.status(201).json(result);
         });
     });
-
 
 
     app.post('/add-project', async (req, res) => {
@@ -513,11 +506,6 @@ con.connect(function (err) {
     });
 
 
-
-
-
-
-
     app.get("/registrirani_korisnici", (req, res) => {
         const sql = `
     SELECT 
@@ -542,18 +530,6 @@ con.connect(function (err) {
             res.send(rows);
         });
     });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 });

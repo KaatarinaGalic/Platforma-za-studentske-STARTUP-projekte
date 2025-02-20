@@ -1,7 +1,13 @@
 <template>
   <v-container ><br><br>
     <v-app-bar app>
-      <v-toolbar-title>Admin Panel</v-toolbar-title>
+      <!-- Puni naslov na tabletima i desktopima, skraćeni na mobitelima -->
+      <v-toolbar-title class="d-none d-sm-flex" style="white-space: nowrap;">
+        Admin Panel
+      </v-toolbar-title>
+      <v-toolbar-title class="d-flex d-sm-none" style="white-space: nowrap;">
+        Admin
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field
         dense
@@ -170,7 +176,7 @@
           <tr v-for="project in projects" :key="project.ID_projekta">
             <td>{{ project.ID_projekta }}</td>
             <td>{{ project.naziv }}</td>
-            <td>{{ project.tehnologije }}</td> <!-- Dodano dohvaćanje tehnologija -->
+            <td>{{ project.tehnologije }}</td>
             <td>Objavljen</td>
             <td class="action-buttons">
               <v-btn class="btn-edit" color="blue" small @click="editProject(project)">Uredi</v-btn>
@@ -239,7 +245,7 @@
             <td>{{ korisnik.naziv_projekta }}</td>
             <td>{{ korisnik.ime }} {{ korisnik.prezime }}</td>
             <td>{{ korisnik.email }}</td>
-            <td>
+            <td >
               <v-icon small color="blue" @click="openEditUserProject(korisnik)">mdi-pencil</v-icon>
               <v-icon small color="red" class="ml-2" @click="removeUserFromProject(korisnik)">mdi-delete</v-icon>
             </td>
@@ -364,7 +370,7 @@
       <v-card>
         <v-card-title>Projekti na čekanju</v-card-title>
         <v-card-text>
-          <v-table>
+          <v-table class="custom-table">
             <thead>
             <tr>
               <th>Naziv</th>
@@ -378,7 +384,7 @@
               <td>{{ project.naziv }}</td>
               <td>{{ project.slika_url }}</td>
               <td>{{ lastSubmitterEmail}}</td>
-              <td>
+              <td class="action-buttons">
                 <v-btn color="green" @click="approveProject(project.ID_projekta)">Odobri</v-btn>
                 <v-btn color="red" @click="rejectProject(project.ID_projekta)">Odbij</v-btn>
               </td>
@@ -387,12 +393,6 @@
           </v-table>
         </v-card-text>
       </v-card>
-
-
-
-
-
-
     </v-main>
   </v-container>
 </template>
@@ -409,12 +409,12 @@ export default {
       someOtherNumber: 100,
       users: [],
       editDialog: false, // Kontrola modala
-      selectedUser: { id: null, ime: "", prezime: "", email: "" }, // Privremeni podaci
+      selectedUser: { id: null, ime: "", prezime: "", email: "" },
       addDialog: false, // Modal za dodavanje novog korisnika
       newUser: { ime: "", prezime: "", email: "", lozinka: "" },
-      showPassword: false, // Vidljivost lozinke u modalu za dodavanje
+      showPassword: false, // Vidljivost lozinke
       projects: [],
-      editProjectDialog: false, // Kontrola modala
+      editProjectDialog: false, // Kontrola modala za uredivanje projekta
       selectedProject: { ID_projekta: null, naziv: "", tehnologije: "" },
       addProjectDialog: false,
       newProject: { naziv: "", tehnologije: "", slika_url: "" },
@@ -476,11 +476,10 @@ export default {
     openAddUserModal() {
       this.addDialog = true;
     },
-    // Dodaje novog korisnika
     async addUser() {
       try {
-        // Napomena: Kako bi ID novog korisnika počinjao od 1000,
-        // postavi AUTO_INCREMENT u bazi na 1000.
+        // Kako bi ID novog korisnika počinjao od 1000,
+
         const response = await axios.post("http://localhost:6969/register", {
           ime: this.newUser.ime,
           prezime: this.newUser.prezime,
@@ -491,7 +490,6 @@ export default {
           alert("Korisnik uspješno dodan!");
           this.addDialog = false;
           this.fetchUsers();
-          // Resetiramo formu
           this.newUser = { ime: "", prezime: "", email: "", lozinka: "" };
         }
       } catch (error) {
@@ -520,14 +518,14 @@ export default {
     },
     editProject(project) {
       console.log("Otvaranje modala za projekt:", project); // Debug
-      this.selectedProject = { ...project }; // Kopiranje podataka
+      this.selectedProject = { ...project };
       this.editProjectDialog = true;
     },
     async updateProject() {
       console.log("Podaci prije slanja:", this.selectedProject);
       try {
         await axios.put("http://localhost:6969/projekti", {
-          id: this.selectedProject.ID_projekta, // koristi ID iz selectedProject
+          id: this.selectedProject.ID_projekta,
           naziv: this.selectedProject.naziv,
           // Ako je this.selectedProject.tehnologije niz, pretvori ga u string:
           tehnologije: Array.isArray(this.selectedProject.tehnologije)
@@ -581,14 +579,13 @@ export default {
           email: this.userEmail,
           projectId: this.selectedProjectId
         });
-        alert(response.data); // "User added to project successfully"
+        alert(response.data);
 
-        // Zatvori dijalog i resetiraj formu
         this.addUserToProjectDialog = false;
         this.userEmail = '';
         this.selectedProjectId = null;
 
-        // Osvježi tablicu "Registrirani korisnici na projektima"
+        // Osvježi tablicu registrirani korisnici na projektima
         this.fetchRegistriraniKorisnici();
       } catch (error) {
         console.error('Greška kod dodavanja korisnika na projekt:', error);
@@ -598,8 +595,8 @@ export default {
 
     //za zadnju tabelu metode
     openEditUserProject(korisnik) {
-      this.selectedUser = { ...korisnik }; // Populate selected user data
-      this.editUserDialog = true; // Open the edit modal
+      this.selectedUser = { ...korisnik };
+      this.editUserDialog = true;
     },
 
     async updateUserProject() {
@@ -707,13 +704,6 @@ export default {
     },
 
 
-
-
-
-
-
-
-
   },
   mounted() {
     this.fetchUsers();
@@ -727,8 +717,8 @@ export default {
   computed: {
     projectOptions() {
       return this.projects.map(p => ({
-        title: p.naziv,       // Ime projekta
-        value: p.ID_projekta  // ID projekta
+        title: p.naziv,
+        value: p.ID_projekta
       }));
     }
   }
@@ -754,7 +744,6 @@ export default {
   margin-bottom: 80px;
 
 }
-
 
 .v-navigation-drawer {
   width: 250px;
@@ -795,8 +784,6 @@ export default {
   background-color: #57a895;
 }
 
-
-
 .search-field .v-input__control {
   background-color: #151016;
 }
@@ -824,17 +811,13 @@ export default {
   font-size: 14px;
 }
 
-/* Možeš maknuti ili prilagoditi postojeće .v-table * selektore da ne kolidiraju */
-/* Umjesto njih, ciljaj .custom-table klasu. */
 .custom-table {
   width: 100%;
   /* Uklanja razmake između ćelija, da sve bude zbijenije */
   border-collapse: collapse;
-  /* Ako želiš da ti tablica bude centrirana unutar roditelja */
   margin: 0 auto;
 }
 
-/* Thead pozadina i stil */
 .custom-table thead {
   background-color: #57a895;
   color: #fff;
@@ -843,35 +826,34 @@ export default {
 /* Stil za header i obične ćelije */
 .custom-table th,
 .custom-table td {
-  text-align: center; /* Centriranje teksta */
-  padding: 10px;      /* Unutarnji razmak u ćelijama */
-  border: 1px solid #ddd; /* Tanka siva crta između redaka/stupaca */
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
 }
 
-/* Dodatni naglasak za header */
 .custom-table th {
   font-weight: bold;
 }
 .action-buttons {
   display: flex;
-  justify-content: center; /* Centriraj gumbe unutar ćelije */
+  justify-content: center;
   gap: 5px; /* Smanji razmak između gumba */
 
 }
 
 .action-buttons v-btn {
-  min-width: 70px; /* Smanji širinu gumba */
-  padding: 5px 10px; /* Smanji unutarnji razmak */
-  font-size: 12px; /* Smanji veličinu fonta */
+  min-width: 70px;
+  padding: 5px 10px;
+  font-size: 12px;
 
 }
 .btn-edit:hover {
-  background-color: #1976D2; /* Tamnija nijansa plave */
-  transform: scale(1.05); /* Lagano povećanje */
-  transition: 0.3s ease-in-out; /* Glatka tranzicija */
+  background-color: #1976D2;
+  transform: scale(1.05);
+  transition: 0.3s ease-in-out;
 }
 .btn-delete:hover {
-  background-color: #D32F2F; /* Tamnija nijansa crvene */
+  background-color: #D32F2F;
   transform: scale(1.05);
   transition: 0.3s ease-in-out;
 }
@@ -879,13 +861,5 @@ export default {
 .btn-delete:hover {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-
-
-
-
-
-
-
 
 </style>
