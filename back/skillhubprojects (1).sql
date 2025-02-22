@@ -32,7 +32,7 @@ CREATE TABLE `korisnik` (
   `ime` varchar(25) NOT NULL,
   `prezime` varchar(25) NOT NULL,
   `email` varchar(64) NOT NULL,
-  `lozinka` varchar(50) NOT NULL
+  `lozinka` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

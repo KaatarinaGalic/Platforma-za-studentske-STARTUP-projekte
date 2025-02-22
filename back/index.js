@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const express = require('express')
 const cors= require('cors')
 const session=require("express-session")
@@ -25,13 +27,24 @@ con.connect(function (err) {
     }
     app.post('/register', function (req, res) {
         const { ime, prezime, email, lozinka } = req.body;
-        const sql = "INSERT INTO korisnik (ime, prezime, email, lozinka) VALUES (?, ?, ?, ?)";
-        const values = [ime, prezime, email, lozinka];
-        con.query(sql, values, function (err, result) {
-            if (err) return res.status(500).send('Error!' + err);
-            res.status(201).send('User registered!');
+
+
+        bcrypt.hash(lozinka, saltRounds, (err, hashedPassword) => {
+            if (err) {
+                return res.status(500).send('Greška kod hashiranja lozinke: ' + err);
+            }
+
+            const sql = "INSERT INTO korisnik (ime, prezime, email, lozinka) VALUES (?, ?, ?, ?)";
+            const values = [ime, prezime, email, hashedPassword];
+            con.query(sql, values, function (err, result) {
+                if (err) return res.status(500).send('Error!' + err);
+                res.status(201).send('User registered!');
+            });
         });
     });
+
+
+
     app.post('/login', function (req, res) {
         const { email, password } = req.body;
         const sql = "SELECT * FROM korisnik WHERE email = ?";
@@ -41,16 +54,23 @@ con.connect(function (err) {
             if (results.length === 0) return res.status(401).json({ message: 'Invalid credentials' });
 
             const user = results[0];
-            if (user.lozinka !== password) return res.status(401).json({ message: 'Invalid credentials' });
 
-            // Dodavanje role - ako je email admina, onda je 'admin', inače 'user'
-            const role = (email === 'admin@gmail.com') ? 'admin' : 'user';
+            // bcrypt usporedba
+            bcrypt.compare(password, user.lozinka, (err, isMatch) => {
+                if (err) return res.status(500).json({ message: 'Server Error' });
+                if (!isMatch) {
+                    return res.status(401).json({ message: 'Invalid credentials' });
+                }
 
-            req.session.user = { ID_korisnika: user.ID_korisnika, email: user.email, role };
-            // Spremanje uloge u sesiju
-            res.json({ message: 'Login successful', role }); // Slanje uloge frontendu
+
+                const role = (email === 'admin@gmail.com') ? 'admin' : 'user';
+                req.session.user = { ID_korisnika: user.ID_korisnika, email: user.email, role };
+                console.log('Session saved: ', req.session.user);
+                res.json({ message: 'Login successful', role });
+            });
         });
     });
+
 
     app.post('/logout', function (req, res) {
         req.session.destroy((err) => {
@@ -141,21 +161,38 @@ con.connect(function (err) {
     app.patch('/change-password', authenticateSession, (req, res) => {
         const { currentPassword, newPassword } = req.body;
         const userId = req.session.user.ID_korisnika;
-        console.log(userId, currentPassword, newPassword);
+
         const sqlSelect = "SELECT lozinka FROM korisnik WHERE ID_korisnika = ?";
         con.query(sqlSelect, [userId], (err, results) => {
             if (err) return res.status(500).send('Server Error');
-            if (results.length === 0 || results[0].lozinka !== currentPassword) {
-                return res.status(401).send('Current password is incorrect');
+            if (results.length === 0) {
+                return res.status(404).send('Korisnik ne postoji');
             }
 
-            const sqlUpdate = "UPDATE korisnik SET lozinka = ? WHERE ID_korisnika = ?";
-            con.query(sqlUpdate, [newPassword, userId], (err, result) => {
-                if (err) return res.status(500).send('Error updating password');
-                res.status(200).send('Password changed successfully');
+            const hashedPasswordInDb = results[0].lozinka;
+
+            // provjera je li currentPassword ispravan
+            bcrypt.compare(currentPassword, hashedPasswordInDb, (err, isMatch) => {
+                if (err) return res.status(500).send('Server Error');
+                if (!isMatch) {
+                    return res.status(401).send('Current password is incorrect');
+                }
+
+                // ako je stara lozinka točna, hashiraj novu lozinku
+                bcrypt.hash(newPassword, saltRounds, (err, hashedNewPassword) => {
+                    if (err) return res.status(500).send('Greška kod hashiranja nove lozinke: ' + err);
+
+                    // spremi novu hashiranu lozinku u bazu
+                    const sqlUpdate = "UPDATE korisnik SET lozinka = ? WHERE ID_korisnika = ?";
+                    con.query(sqlUpdate, [hashedNewPassword, userId], (err, result) => {
+                        if (err) return res.status(500).send('Error updating password');
+                        res.status(200).send('Password changed successfully');
+                    });
+                });
             });
         });
     });
+
     app.get("/users", function (req, res) {
         const sql = "SELECT ID_korisnika, ime, prezime, email FROM korisnik";
         con.query(sql, function (err, result) {
