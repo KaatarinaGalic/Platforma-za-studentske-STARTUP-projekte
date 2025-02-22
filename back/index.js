@@ -171,18 +171,18 @@ con.connect(function (err) {
 
             const hashedPasswordInDb = results[0].lozinka;
 
-            // provjera je li currentPassword ispravan
+            
             bcrypt.compare(currentPassword, hashedPasswordInDb, (err, isMatch) => {
                 if (err) return res.status(500).send('Server Error');
                 if (!isMatch) {
                     return res.status(401).send('Current password is incorrect');
                 }
 
-                // ako je stara lozinka točna, hashiraj novu lozinku
+
                 bcrypt.hash(newPassword, saltRounds, (err, hashedNewPassword) => {
                     if (err) return res.status(500).send('Greška kod hashiranja nove lozinke: ' + err);
 
-                    // spremi novu hashiranu lozinku u bazu
+
                     const sqlUpdate = "UPDATE korisnik SET lozinka = ? WHERE ID_korisnika = ?";
                     con.query(sqlUpdate, [hashedNewPassword, userId], (err, result) => {
                         if (err) return res.status(500).send('Error updating password');
