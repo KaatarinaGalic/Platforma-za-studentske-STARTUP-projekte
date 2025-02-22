@@ -438,7 +438,7 @@ export default {
   methods: {
     async fetchUsers() {
       try {
-        const response = await axios.get("http://localhost:6969/users");
+        const response = await axios.get("summitvision.studenti.sum.ba/users");
         this.users = response.data;
       } catch (error) {
         console.error("Greška kod dohvaćanja korisnika:", error);
@@ -447,7 +447,7 @@ export default {
     async deleteUser(userId) {
       if (!confirm("Jeste li sigurni da želite obrisati korisnika?")) return;
       try {
-        await axios.delete(`http://localhost:6969/users/${userId}`);
+        await axios.delete(`summitvision.studenti.sum.ba/users/${userId}`);
         this.fetchUsers(); // Ponovno dohvaćanje korisnika nakon brisanja
       } catch (error) {
         console.error("Greška kod brisanja korisnika:", error);
@@ -460,7 +460,7 @@ export default {
 
     async updateUser() {
       try {
-        await axios.put(`http://localhost:6969/users/${this.selectedUser.ID_korisnika}`, {
+        await axios.put(`summitvision.studenti.sum.ba/users/${this.selectedUser.ID_korisnika}`, {
           ime: this.selectedUser.ime,
           prezime: this.selectedUser.prezime,
           email: this.selectedUser.email,
@@ -480,7 +480,7 @@ export default {
       try {
         // Kako bi ID novog korisnika počinjao od 1000,
 
-        const response = await axios.post("http://localhost:6969/register", {
+        const response = await axios.post("summitvision.studenti.sum.ba/register", {
           ime: this.newUser.ime,
           prezime: this.newUser.prezime,
           email: this.newUser.email,
@@ -499,7 +499,7 @@ export default {
     },
     async fetchProjects() {
       try {
-        const response = await axios.get("http://localhost:6969/projekti");
+        const response = await axios.get("summitvision.studenti.sum.ba/projekti");
         this.projects = response.data;
         console.log("Fetched projects:", this.projects);
       } catch (error) {
@@ -510,7 +510,7 @@ export default {
     async deleteProject(projectId) {
       if (!confirm("Jeste li sigurni da želite obrisati projekt?")) return;
       try {
-        await axios.delete(`http://localhost:6969/projekti/${projectId}`);
+        await axios.delete(`summitvision.studenti.sum.ba/projekti/${projectId}`);
         this.fetchProjects(); // Osvježi listu projekata nakon brisanja
       } catch (error) {
         console.error("Greška kod brisanja projekta:", error);
@@ -524,7 +524,7 @@ export default {
     async updateProject() {
       console.log("Podaci prije slanja:", this.selectedProject);
       try {
-        await axios.put("http://localhost:6969/projekti", {
+        await axios.put("summitvision.studenti.sum.ba/projekti", {
           id: this.selectedProject.ID_projekta,
           naziv: this.selectedProject.naziv,
           // Ako je this.selectedProject.tehnologije niz, pretvori ga u string:
@@ -547,7 +547,7 @@ export default {
 
     async addProject() {
       try {
-        const response = await axios.post("http://localhost:6969/projects", {
+        const response = await axios.post("summitvision.studenti.sum.ba/projects", {
           naziv: this.newProject.naziv,
           tehnologije: this.newProject.tehnologije,
           slika_url: this.newProject.slika_url
@@ -564,7 +564,7 @@ export default {
     },
     async fetchRegistriraniKorisnici() {
       try {
-        const response = await axios.get("http://localhost:6969/registrirani_korisnici");
+        const response = await axios.get("summitvision.studenti.sum.ba/registrirani_korisnici");
         this.registriraniKorisnici = response.data;
       } catch (error) {
         console.error("Greška kod dohvaćanja registriranih korisnika:", error);
@@ -575,7 +575,7 @@ export default {
     },
     async adminAddToProject() {
       try {
-        const response = await axios.post('http://localhost:6969/admin-add-to-project', {
+        const response = await axios.post('summitvision.studenti.sum.ba/admin-add-to-project', {
           email: this.userEmail,
           projectId: this.selectedProjectId
         });
@@ -601,7 +601,7 @@ export default {
 
     async updateUserProject() {
       try {
-        await axios.put(`http://localhost:6969/registrirani_korisnici/${this.selectedUser.ID_korisnika}`, {
+        await axios.put(`summitvision.studenti.sum.ba/registrirani_korisnici/${this.selectedUser.ID_korisnika}`, {
           projectId: this.selectedProjectId, // novi ID projekta
         });
         this.editUserDialog = false;
@@ -615,7 +615,7 @@ export default {
     async removeUserFromProject(korisnik) {
       if (!confirm("Jeste li sigurni da želite ukloniti ovog korisnika s projekta?")) return;
       try {
-        axios.delete('http://localhost:6969/registrirani_korisnici/' + korisnik.ID_korisnika)
+        axios.delete('summitvision.studenti.sum.ba/registrirani_korisnici/' + korisnik.ID_korisnika)
         this.fetchRegistriraniKorisnici();
       } catch (error) {
         console.error("Greška kod uklanjanja korisnika s projekta:", error);
@@ -627,7 +627,7 @@ export default {
 
     async fetchTechnologies() {
       try {
-        const response = await axios.get("http://localhost:6969/technologies");
+        const response = await axios.get("summitvision.studenti.sum.ba/technologies");
         this.technologies = response.data;
       } catch (error) {
         console.error("Greška kod dohvaćanja tehnologija:", error);
@@ -637,7 +637,7 @@ export default {
     async deleteTechnology(techId) {
       if (!confirm("Jeste li sigurni da želite obrisati ovu tehnologiju?")) return;
       try {
-        await axios.delete(`http://localhost:6969/technologies/${techId}`);
+        await axios.delete(`summitvision.studenti.sum.ba/technologies/${techId}`);
         this.fetchTechnologies(); // Osvježi listu nakon brisanja
       } catch (error) {
         console.error("Greška kod brisanja tehnologije:", error);
@@ -648,7 +648,7 @@ export default {
     },
     async addTechnology() {
       try {
-        const response = await axios.post("http://localhost:6969/technologies", {
+        const response = await axios.post("summitvision.studenti.sum.ba/technologies", {
           naziv: this.newTechnology.naziv
         });
         if (response.status === 201) {
@@ -665,7 +665,7 @@ export default {
     //Za Zahtjev
     async fetchPendingProjects() {
       try {
-        const response = await fetch("http://localhost:6969/api/projects/pending");
+        const response = await fetch("summitvision.studenti.sum.ba/api/projects/pending");
         this.pendingProjects = await response.json();
       } catch (error) {
         console.error("Error fetching pending projects:", error);
@@ -674,7 +674,7 @@ export default {
 
     async approveProject(projectId) {
       try {
-        await axios.post(`http://localhost:6969/api/projects/approve/${projectId}`);
+        await axios.post(`summitvision.studenti.sum.ba/api/projects/approve/${projectId}`);
         alert("Projekt odobren!");
         this.fetchPendingProjects();
       } catch (error) {
@@ -687,7 +687,7 @@ export default {
     async rejectProject(projectId) {
       console.log('Rejecting project with ID:', projectId);
       try {
-        await axios.post(`http://localhost:6969/api/projects/reject/${projectId}`);
+        await axios.post(`summitvision.studenti.sum.ba/api/projects/reject/${projectId}`);
         this.fetchPendingProjects();
       } catch (error) {
         console.error("Error rejecting project:", error);
@@ -696,7 +696,7 @@ export default {
 
     async getLastSubmitterEmail() {
       try {
-        const response = await axios.get('http://localhost:6969/api/projects/last-submitter');
+        const response = await axios.get('summitvision.studenti.sum.ba/api/projects/last-submitter');
         this.lastSubmitterEmail = response.data.lastSubmitterEmail;
       } catch (error) {
         console.error('Greška pri dohvaćanju emaila podnositelja:', error);
