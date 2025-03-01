@@ -40,13 +40,13 @@ CREATE TABLE `korisnik` (
 --
 
 INSERT INTO `korisnik` (`ID_korisnika`, `ime`, `prezime`, `email`, `lozinka`) VALUES
-(1000, 'Ivan', 'Horvat', 'ivan.horvat@gmail.com', 'ivan123lozinka'),
-(1111, 'Admin', 'Admin', 'admin@gmail.com', 'admin123'),
-(1256, 'Ana', 'Kosir', 'ana.kosir@gmail.com', 'ana123lozinka'),
-(1458, 'Marko', 'Mlikota', 'marko.mlikota@gmail.com', 'marko123lozinka'),
-(1485, 'Ivana', 'Novak', 'ivana.novak@gmailcom', 'ivana123lozinka'),
-(1753, 'test', 'test1', 'mail', 'passwd'),
-(1754, 'John', 'Doe', 'john.doe@example.com', '12345');
+(1000, 'Ivan', 'Horvat', 'ivan.horvat@gmail.com', '$2b$10$8bz5pLxVmL35Lo4akiW9w.4FZdoX0eOdoV4RPBz0l5JtxweNOdNca'),
+(1111, 'Admin', 'Admin', 'admin@gmail.com', '$2b$10$8bz5pLxVmL35Lo4akiW9w.4FZdoX0eOdoV4RPBz0l5JtxweNOdNca'),
+(1256, 'Ana', 'Kosir', 'ana.kosir@gmail.com', '$2b$10$8bz5pLxVmL35Lo4akiW9w.4FZdoX0eOdoV4RPBz0l5JtxweNOdNca'),
+(1458, 'Marko', 'Mlikota', 'marko.mlikota@gmail.com', '$2b$10$8bz5pLxVmL35Lo4akiW9w.4FZdoX0eOdoV4RPBz0l5JtxweNOdNca'),
+(1485, 'Ivana', 'Novak', 'ivana.novak@gmailcom', '$2b$10$8bz5pLxVmL35Lo4akiW9w.4FZdoX0eOdoV4RPBz0l5JtxweNOdNca'),
+(1753, 'test', 'test1', 'mail', '$2b$10$8bz5pLxVmL35Lo4akiW9w.4FZdoX0eOdoV4RPBz0l5JtxweNOdNca'),
+(1754, 'John', 'Doe', 'john.doe@example.com', '$2b$10$8bz5pLxVmL35Lo4akiW9w.4FZdoX0eOdoV4RPBz0l5JtxweNOdNca');
 
 -- --------------------------------------------------------
 
