@@ -182,7 +182,7 @@ export default {
   methods: {
     async handleLogin() {
       try {
-        const response = await axios.post('summitvision.studenti.sum.ba/login', {
+        const response = await axios.post('http://summitvision.studenti.sum.ba/login', {
           email: this.email,
           password: this.currentPassword
         }, {withCredentials: true});
@@ -207,7 +207,7 @@ export default {
     },
     async handleLogout() {
       try {
-        await axios.post('summitvision.studenti.sum.ba/logout', {}, {withCredentials: true});
+        await axios.post('http://summitvision.studenti.sum.ba/logout', {}, {withCredentials: true});
         sessionStorage.removeItem('isLoggedIn');
         this.isLoggedIn = false;
       } catch (error) {
@@ -222,7 +222,7 @@ export default {
       console.log('Register button clicked with projectId:', projectId);
 
       try {
-        const response = await axios.post('summitvision.studenti.sum.ba/add-to-project', {projectId}, {withCredentials: true});
+        const response = await axios.post('http://summitvision.studenti.sum.ba/add-to-project', {projectId}, {withCredentials: true});
         await this.fetchProjectsUsr();
         if (response.status === 200) {
           alert('Successfully registered for the project!');
@@ -240,7 +240,7 @@ export default {
       console.log('Deregister button clicked with projectId:', projectId);
 
       try {
-        const response = await axios.delete('summitvision.studenti.sum.ba/remove-from-project', {
+        const response = await axios.delete('http://summitvision.studenti.sum.ba/remove-from-project', {
           data: {projectId},
           withCredentials: true
         });
@@ -259,7 +259,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.patch('summitvision.studenti.sum.ba/change-password', {
+        const response = await axios.patch('http://summitvision.studenti.sum.ba/change-password', {
           currentPassword: this.currentPassword,
           newPassword: this.newPassword,
         }, {withCredentials: true});
@@ -273,7 +273,7 @@ export default {
       }
     },
     fetchProjects() {
-      axios.get('summitvision.studenti.sum.ba/projekti')
+      axios.get('http://summitvision.studenti.sum.ba/projekti')
         .then(response => {
           console.log(response.data);
           this.projects = response.data;
@@ -281,7 +281,7 @@ export default {
         .catch(error => console.error('Error fetching data:', error));
     },
     fetchProjectsUsr() {
-      axios.get('summitvision.studenti.sum.ba/projekti_korisnik', {withCredentials: true})
+      axios.get('http://summitvision.studenti.sum.ba/projekti_korisnik', {withCredentials: true})
         .then(response => {
           console.log(response.data);
           this.projects = response.data;

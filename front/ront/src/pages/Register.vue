@@ -142,7 +142,7 @@ export default {
       if (!v$.value.$invalid) {
         try {
           // Slanje podataka na server
-          await axios.post('summitvision.studenti.sum.ba/register', {
+          await axios.post('http://summitvision.studenti.sum.ba/register', {
             ime: state.value.name,
             prezime: state.value.surname,
             email: state.value.email,
@@ -152,7 +152,7 @@ export default {
           // Ako je odabran novi projekt, pošalji podatke na rutu za dodavanje projekta
 
           if (isNewProject.value) {
-            await axios.post('summitvision.studenti.sum.ba/api/projects/register', {
+            await axios.post('http://summitvision.studenti.sum.ba/api/projects/register', {
               name: state.value.projectName,
               description: state.value.projectDescription,
               owner_id: state.value.email
